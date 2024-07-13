@@ -1,3 +1,8 @@
+/**
+ *
+ * @author hatun
+ */
+
 USE DuAn1;
 
 -- Bảng HeDieuHanh
@@ -119,6 +124,8 @@ INSERT INTO NhanVien (ma_nhan_vien, ten_nhan_vien, so_dien_thoai, dia_chi, cccd,
 VALUES ('NV004', 'Pham Thi I', '0223344550', '321 Le Lai', '012345678904', 'password4', 0, GETDATE(), 'admin', 1);
 INSERT INTO NhanVien (ma_nhan_vien, ten_nhan_vien, so_dien_thoai, dia_chi, cccd, mat_khau, chuc_vu, ngay_tao, nguoi_tao, hoat_dong) 
 VALUES ('NV005', 'Hoang Van J', '0334455660', '654 Nguyen Thi Minh Khai', '012345678905', 'password5', 1, GETDATE(), 'admin', 1);
+INSERT INTO NhanVien (ma_nhan_vien, ten_nhan_vien, so_dien_thoai, dia_chi, cccd, mat_khau, chuc_vu, ngay_tao, nguoi_tao, hoat_dong) 
+VALUES ('NV006', N'Nguyễn Thanh Tùng', '0334455660', '654 Nguyen Thi Minh Khai', '012345678906', '123', 1, GETDATE(), 'admin', 1);
 
 -- Bảng PhieuGiamGia
 INSERT INTO PhieuGiamGia (ma_voucher, ten_voucher, so_luong, gia_tri_toi_thieu_ap_dung, phan_tram_giam, so_tien_duoc_giam_toi_da, ngay_bat_dau, ngay_ket_thuc, mo_ta, ngay_tao, nguoi_tao, hoat_dong)
