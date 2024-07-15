@@ -15,7 +15,7 @@ public class Profile extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Ubuntu", 3, 30)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(30, 30, 30));
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/phone/resources/images/social-media.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/phone/resources/icons/social-media.png"))); // NOI18N
         jLabel1.setText(" Nhóm 5");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

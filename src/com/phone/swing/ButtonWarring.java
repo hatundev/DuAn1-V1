@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JButton;
 import javax.swing.border.EmptyBorder;
 
-public class Button2 extends JButton {
+public class ButtonWarring extends JButton {
 
     public int getRound() {
         return round;
@@ -47,11 +47,11 @@ public class Button2 extends JButton {
     private final Insets shadowSize = new Insets(2, 5, 8, 5);
     private final RippleEffect2 rippleEffect = new RippleEffect2(this);
 
-    public Button2() {
+    public ButtonWarring() {
         setBorder(new EmptyBorder(10, 12, 15, 12));
         setContentAreaFilled(false);
-        setBackground(new Color(255, 255, 255));
-        setForeground(new Color(80, 80, 80));
+        setBackground(new Color(255,193,7));
+        setForeground(new Color(0, 0, 0));
         rippleEffect.setRippleColor(new Color(220, 220, 220));
     }
 

@@ -35,6 +35,8 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
         init();
+        lbView.setText("Quản lý sản phẩm");
+        main.showForm(new FormSanPham());
     }
 
     private void init() {
@@ -74,8 +76,10 @@ public class Main extends javax.swing.JFrame {
                         main.showForm(new FormHoaDon());
                     }
                 } else if (menuIndex == 3) {
+                    lbView.setText("Quản lý sản phẩm");
                     main.showForm(new FormSanPham());
                     if (subMenuIndex == 0) {
+                        lbView.setText("Quản lý sản phẩm");
                         main.showForm(new FormSanPham());
                     } else if (subMenuIndex == 1) {
                         main.showForm(new FormSanPham());
@@ -169,7 +173,7 @@ public class Main extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        lbView = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Phần mềm bán điện thoại - DuAn1_Nhom5");
@@ -206,8 +210,8 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
-        jLabel1.setText("Form .....");
+        lbView.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
+        lbView.setText("Form .....");
 
         javax.swing.GroupLayout panelHeaderLayout = new javax.swing.GroupLayout(panelHeader);
         panelHeader.setLayout(panelHeaderLayout);
@@ -215,7 +219,7 @@ public class Main extends javax.swing.JFrame {
             panelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelHeaderLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addComponent(jLabel1)
+                .addComponent(lbView)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1399, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
@@ -247,15 +251,11 @@ public class Main extends javax.swing.JFrame {
                             .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addGroup(panelHeaderLayout.createSequentialGroup()
+                        .addGap(13, 13, 13)
                         .addGroup(panelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelHeaderLayout.createSequentialGroup()
-                                .addGap(13, 13, 13)
-                                .addGroup(panelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnLogOut)
-                                    .addComponent(jLabel2)))
-                            .addGroup(panelHeaderLayout.createSequentialGroup()
-                                .addGap(13, 13, 13)
-                                .addComponent(jLabel1)))
+                            .addComponent(btnLogOut)
+                            .addComponent(jLabel2)
+                            .addComponent(lbView))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -340,13 +340,13 @@ public class Main extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bg;
     private javax.swing.JLabel btnLogOut;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JLabel lbRole;
     private javax.swing.JLabel lbUserName;
+    private javax.swing.JLabel lbView;
     private javax.swing.JPanel panelHeader;
     // End of variables declaration//GEN-END:variables
 }
