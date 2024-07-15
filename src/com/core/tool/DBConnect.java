@@ -18,7 +18,7 @@ public class DBConnect {
     public static final String PORT = "1433";
     public static final String DBNAME = "DuAn1";
     public static final String USERNAME = "sa";
-    public static final String PASSWORD = "hatun130916";
+    public static final String PASSWORD = "Hatun130916";
 
     public static Connection getConnection() {
         String connectionUrl = "jdbc:sqlserver://" + HOSTNAME + ":" + PORT + ";"
@@ -26,10 +26,15 @@ public class DBConnect {
 
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            System.out.println(connectionUrl);
             return DriverManager.getConnection(connectionUrl, USERNAME, PASSWORD);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace(System.out);
         }
         return null;
+    }
+    
+    public static void main(String[] args) {
+        getConnection();
     }
 }
