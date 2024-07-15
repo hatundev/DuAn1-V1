@@ -4,24 +4,68 @@
  */
 package com.phone.view.form.sanpham;
 
+import com.core.model.response.ThuocTinhResponse;
+import com.core.service.ThuocTinhService;
+import com.core.service.impl.ThuocTinhServiceImpl;
+import com.phone.swing.Combobox;
+import java.util.List;
+
 /**
  *
  * @author hatun
  */
 public class FormThemSanPham extends javax.swing.JFrame {
 
+    private ThuocTinhServiceImpl service = new ThuocTinhServiceImpl();
     /**
      * Creates new form FormThemSanPham
      */
     public FormThemSanPham() {
         initComponents();
         setLocationRelativeTo(null);
+        init();
+        reset();
+    }
+    
+    
+    private void init(){
+        fillDataToCombobox(cbChip, service.findAll("Chip"));
+        fillDataToCombobox(cbHeDieuHanh, service.findAll("HeDieuHanh"));
+        fillDataToCombobox(cbCameraSau, service.findAll("CameraSau"));
+        fillDataToCombobox(cbCameraTruoc, service.findAll("CameraTruoc"));
+        fillDataToCombobox(cbPin, service.findAll("Pin"));
+        fillDataToCombobox(cbHang, service.findAll("Hang"));
+        fillDataToCombobox(cbManHinh, service.findAll("ManHinh"));
+        fillDataToCombobox(cbRam, service.findAll("Ram"));
+        fillDataToCombobox(cbBoNho, service.findAll("BoNho"));
+        fillDataToCombobox(cbMauSac, service.findAll("MauSac"));
     }
 
     private void openThemNhanh(String name) {
         FormThemNhanh formThemNhanh = new FormThemNhanh();
         formThemNhanh.handleEvent(name);
         formThemNhanh.setVisible(true);
+    }
+    
+    private void fillDataToCombobox(Combobox combo, List<ThuocTinhResponse> listData){
+        for (ThuocTinhResponse thuocTinhResponse : listData) {
+            combo.addItem(thuocTinhResponse.getName());
+        }
+    }
+    
+    private void reset(){
+        txtTenSanPham.setText("");
+        txtGiaBan.setText("");
+        cbChip.setSelectedIndex(-1);
+        cbHeDieuHanh.setSelectedIndex(-1);
+        cbCameraSau.setSelectedIndex(-1);
+        cbCameraTruoc.setSelectedIndex(-1);
+        cbPin.setSelectedIndex(-1);
+        cbHang.setSelectedIndex(-1);
+        cbManHinh.setSelectedIndex(-1);
+        cbRam.setSelectedIndex(-1);
+        cbBoNho.setSelectedIndex(-1);
+        cbMauSac.setSelectedIndex(-1);
     }
 
     /**
@@ -177,6 +221,11 @@ public class FormThemSanPham extends javax.swing.JFrame {
         btnExit.setText("Exit");
 
         btnReset.setText("Reset");
+        btnReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResetActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -341,6 +390,11 @@ public class FormThemSanPham extends javax.swing.JFrame {
         // TODO add your handling code here:
         openThemNhanh("màu sắc");
     }//GEN-LAST:event_btnThemMauSacMouseClicked
+
+    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+        // TODO add your handling code here:
+        reset();
+    }//GEN-LAST:event_btnResetActionPerformed
 
     /**
      * @param args the command line arguments

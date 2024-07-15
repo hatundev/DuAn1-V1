@@ -23,18 +23,12 @@ public class DBConnect {
     public static Connection getConnection() {
         String connectionUrl = "jdbc:sqlserver://" + HOSTNAME + ":" + PORT + ";"
                 + "databaseName=" + DBNAME + ";encrypt=false";
-
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            System.out.println(connectionUrl);
             return DriverManager.getConnection(connectionUrl, USERNAME, PASSWORD);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace(System.out);
         }
         return null;
-    }
-    
-    public static void main(String[] args) {
-        getConnection();
     }
 }
