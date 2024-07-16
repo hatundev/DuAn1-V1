@@ -21,32 +21,10 @@ import lombok.ToString;
 @Setter
 @Builder
 @ToString
-public class ChiTietSanPham {
+public class KetQua {
     
-    private Integer id;
-
-    private Integer idSanPham;
-
-    private Integer idRam;
-
-    private Integer idBoNho;
-
-    private Integer idMauSac;
-
-    private String tenSanPhamChiTiet;
-
-    private Float giaBan;
-
-    private Integer yeuThich;
-
-    private String ngayTao;
-
-    private String ngaySua;
-
-    private String nguoiTao;
-
-    private String nguoiSua;
+    private Integer idKetQua;
     
-    private Integer hoatDong;
+    private String thongBao;
     
 }

@@ -4,9 +4,12 @@
  */
 package com.phone.view.form.sanpham;
 
+import com.core.entity.KetQua;
+import com.core.model.request.ThemSanPhamRequest;
 import com.core.model.response.ThuocTinhResponse;
-import com.core.service.ThuocTinhService;
+import com.core.service.SanPhamService;
 import com.core.service.impl.ThuocTinhServiceImpl;
+import com.phone.custom.component.Notification;
 import com.phone.swing.Combobox;
 import java.util.List;
 
@@ -17,6 +20,10 @@ import java.util.List;
 public class FormThemSanPham extends javax.swing.JFrame {
 
     private ThuocTinhServiceImpl service = new ThuocTinhServiceImpl();
+    private SanPhamService sanPhamService = new SanPhamService();
+    private Notification notiSuccess;
+    private Notification notiWarring;
+
     /**
      * Creates new form FormThemSanPham
      */
@@ -26,9 +33,8 @@ public class FormThemSanPham extends javax.swing.JFrame {
         init();
         reset();
     }
-    
-    
-    private void init(){
+
+    private void init() {
         fillDataToCombobox(cbChip, service.findAll("Chip"));
         fillDataToCombobox(cbHeDieuHanh, service.findAll("HeDieuHanh"));
         fillDataToCombobox(cbCameraSau, service.findAll("CameraSau"));
@@ -46,14 +52,14 @@ public class FormThemSanPham extends javax.swing.JFrame {
         formThemNhanh.handleEvent(name);
         formThemNhanh.setVisible(true);
     }
-    
-    private void fillDataToCombobox(Combobox combo, List<ThuocTinhResponse> listData){
+
+    private void fillDataToCombobox(Combobox combo, List<ThuocTinhResponse> listData) {
         for (ThuocTinhResponse thuocTinhResponse : listData) {
             combo.addItem(thuocTinhResponse.getName());
         }
     }
-    
-    private void reset(){
+
+    private void reset() {
         txtTenSanPham.setText("");
         txtGiaBan.setText("");
         cbChip.setSelectedIndex(-1);
@@ -66,6 +72,70 @@ public class FormThemSanPham extends javax.swing.JFrame {
         cbRam.setSelectedIndex(-1);
         cbBoNho.setSelectedIndex(-1);
         cbMauSac.setSelectedIndex(-1);
+    }
+
+    private Integer findIdByName(String name, List<ThuocTinhResponse> data) {
+        for (ThuocTinhResponse thuocTinhResponse : data) {
+            if (thuocTinhResponse.getName().equals(name)) {
+                return thuocTinhResponse.getId();
+            }
+        }
+        return 0;
+    }
+
+    private ThemSanPhamRequest readForm() {
+        
+        String name = txtTenSanPham.getText().trim();
+        String stringPrice = txtGiaBan.getText();
+        if (name.isEmpty()) {
+            notiWarring = new Notification(this, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Chưa nhập tên");
+            notiWarring.showNotification();
+            txtTenSanPham.requestFocus();
+            return null;
+        }
+
+        if (stringPrice.isEmpty()) {
+            notiWarring = new Notification(this, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Chưa nhập giá");
+            notiWarring.showNotification();
+            txtGiaBan.requestFocus();
+            return null;
+        }
+
+        Float price;
+        try {
+            price = Float.valueOf(stringPrice);
+            if (price <= 0) {
+                notiWarring = new Notification(this, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Giá phải là số lớn hơn 0");
+                notiWarring.showNotification();
+                txtGiaBan.requestFocus();
+                return null;
+            }
+        } catch (Exception e) {
+            notiWarring = new Notification(this, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Giá phải là số");
+            notiWarring.showNotification();
+            txtGiaBan.requestFocus();
+            return null;
+        }
+
+        String fullName = name + " " + String.valueOf(cbRam.getSelectedItem())
+                + " " + String.valueOf(cbBoNho.getSelectedItem())
+                + " " + String.valueOf(cbMauSac.getSelectedItem());
+
+        ThemSanPhamRequest themSanPhamRequest = new ThemSanPhamRequest(
+                name,
+                fullName,
+                price,
+                findIdByName(String.valueOf(cbChip.getSelectedItem()), service.findAll("Chip")),
+                findIdByName(String.valueOf(cbHeDieuHanh.getSelectedItem()), service.findAll("HeDieuHanh")),
+                findIdByName(String.valueOf(cbCameraSau.getSelectedItem()), service.findAll("CameraSau")),
+                findIdByName(String.valueOf(cbCameraTruoc.getSelectedItem()), service.findAll("CameraTruoc")),
+                findIdByName(String.valueOf(cbPin.getSelectedItem()), service.findAll("Pin")),
+                findIdByName(String.valueOf(cbHang.getSelectedItem()), service.findAll("Hang")),
+                findIdByName(String.valueOf(cbMauSac.getSelectedItem()), service.findAll("MauSac")),
+                findIdByName(String.valueOf(cbRam.getSelectedItem()), service.findAll("Ram")),
+                findIdByName(String.valueOf(cbBoNho.getSelectedItem()), service.findAll("BoNho")),
+                findIdByName(String.valueOf(cbMauSac.getSelectedItem()), service.findAll("MauSac")));
+        return themSanPhamRequest;
     }
 
     /**
@@ -217,8 +287,18 @@ public class FormThemSanPham extends javax.swing.JFrame {
         });
 
         btnThem.setText("Add");
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
+        });
 
         btnExit.setText("Exit");
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExitActionPerformed(evt);
+            }
+        });
 
         btnReset.setText("Reset");
         btnReset.addActionListener(new java.awt.event.ActionListener() {
@@ -335,7 +415,7 @@ public class FormThemSanPham extends javax.swing.JFrame {
                     .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         pack();
@@ -395,6 +475,25 @@ public class FormThemSanPham extends javax.swing.JFrame {
         // TODO add your handling code here:
         reset();
     }//GEN-LAST:event_btnResetActionPerformed
+
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnExitActionPerformed
+
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        // TODO add your handling code here:
+        if (readForm() != null) {
+            KetQua ketQua = sanPhamService.create(readForm());
+            if (ketQua.getIdKetQua() == 0) {
+                notiWarring = new Notification(this, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, ketQua.getThongBao());
+                notiWarring.showNotification();
+            } else {
+                notiSuccess = new Notification(this, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, ketQua.getThongBao());
+                notiSuccess.showNotification();
+            }
+        }
+    }//GEN-LAST:event_btnThemActionPerformed
 
     /**
      * @param args the command line arguments

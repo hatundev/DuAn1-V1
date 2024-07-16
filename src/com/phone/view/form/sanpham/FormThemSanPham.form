@@ -161,7 +161,7 @@
                   <Component id="btnThem" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnReset" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="18" max="32767" attributes="0"/>
+              <EmptySpace pref="40" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -352,11 +352,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Add"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnThemActionPerformed"/>
+      </Events>
     </Component>
     <Component class="com.phone.swing.ButtonInfo" name="btnExit">
       <Properties>
         <Property name="text" type="java.lang.String" value="Exit"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnExitActionPerformed"/>
+      </Events>
     </Component>
     <Component class="com.phone.swing.ButtonWarring" name="btnReset">
       <Properties>

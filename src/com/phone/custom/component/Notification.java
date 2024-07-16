@@ -36,16 +36,16 @@ public class Notification extends javax.swing.JComponent {
     /**
      * Creates new form Notification
      */
-    public Notification(Frame fram, Type type, Location location) {
+    public Notification(Frame fram, Type type, Location location, String message) {
         this.fram = fram;
         this.type = type;
         this.location = location;
         initComponents();
-        init();
+        init(message);
         initAnimator();
     }
 
-    private void init() {
+    private void init(String message) {
         setBackground(Color.WHITE);
         dialog = new JDialog(fram);
         dialog.setUndecorated(true);
@@ -55,10 +55,10 @@ public class Notification extends javax.swing.JComponent {
         dialog.setSize(getPreferredSize());
         if (type == Type.SUCCESS) {
             lbIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/phone/resources/icons/success.png")));
-            lbMessage.setText("Thành công!");
+            lbMessage.setText(message);
         } else {
             lbIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/phone/resources/icons/erros.png")));
-            lbMessage.setText("Thất bại!");
+            lbMessage.setText(message);
         }
     }
 
@@ -175,7 +175,7 @@ public class Notification extends javax.swing.JComponent {
 
     private void sleep() {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1500);
         } catch (InterruptedException e) {
         }
     }
@@ -256,7 +256,7 @@ public class Notification extends javax.swing.JComponent {
                 .addGap(20, 20, 20)
                 .addComponent(lbIcon)
                 .addGap(20, 20, 20)
-                .addComponent(lbMessage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbMessage, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
                 .addGap(20, 20, 20)
                 .addComponent(cmdClose)
                 .addGap(20, 20, 20))

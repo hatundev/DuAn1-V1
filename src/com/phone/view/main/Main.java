@@ -38,7 +38,11 @@ public class Main extends javax.swing.JFrame {
         lbView.setText("Quản lý sản phẩm");
         main.showForm(new FormSanPham());
     }
-
+    
+    private void close() {
+        this.dispose();
+    }
+    
     private void init() {
         layout = new MigLayout("fill", "10[]10[100%, fill]10", "10[fill, top]10");
         bg.setLayout(layout);
@@ -48,6 +52,7 @@ public class Main extends javax.swing.JFrame {
         menu.addEvent(new EventMenuSelected() {
             @Override
             public void menuSelected(int menuIndex, int subMenuIndex) {
+                
                 if (menuIndex == 0) {
                     if (lbRole.getText().equals("Quản lý")) {
                         main.showForm(new FormHome());
@@ -99,12 +104,16 @@ public class Main extends javax.swing.JFrame {
                         main.showForm(new FormKhachHang());
                     }
                 } else if (menuIndex == 6) {
-                    main.showForm(new FormVoucher());
-                    if (subMenuIndex == 0) {
-                        main.showForm(new FormVoucher());
-                    } else if (subMenuIndex == 1) {
-                        main.showForm(new FormVoucher());
-                    }
+                    
+                    Test test = new Test();
+                    test.setVisible(true);
+                    close();
+//                    main.showForm(new FormVoucher());
+//                    if (subMenuIndex == 0) {
+//                        main.showForm(new FormVoucher());
+//                    } else if (subMenuIndex == 1) {
+//                        main.showForm(new FormVoucher());
+//                    }
                 }
             }
         });

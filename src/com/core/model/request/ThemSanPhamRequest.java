@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.core.entity;
+package com.core.model.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,32 +21,32 @@ import lombok.ToString;
 @Setter
 @Builder
 @ToString
-public class ChiTietSanPham {
+public class ThemSanPhamRequest {
     
-    private Integer id;
-
-    private Integer idSanPham;
-
-    private Integer idRam;
-
-    private Integer idBoNho;
-
-    private Integer idMauSac;
-
+    private String tenSanPham;
+    
     private String tenSanPhamChiTiet;
-
-    private Float giaBan;
-
-    private Integer yeuThich;
-
-    private String ngayTao;
-
-    private String ngaySua;
-
-    private String nguoiTao;
-
-    private String nguoiSua;
     
-    private Integer hoatDong;
+    private Float giaBan;
+    
+    private Integer idChip;
+    
+    private Integer idHeDieuHanh;
+    
+    private Integer idCameraSau;
+    
+    private Integer idCameraTruoc;
+    
+    private Integer idPin;
+    
+    private Integer idHang;
+    
+    private Integer idManHinh;
+    
+    private Integer idRam;
+    
+    private Integer idBoNho;
+    
+    private Integer idMauSac;
     
 }

@@ -27,6 +27,7 @@ public class ThuocTinhRepository {
                                          hoat_dong
                                      FROM
                                          %s
+                                     ORDER BY id DESC
                                     """, tenBang);
         try (Connection conn = DBConnect.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
             List<ThuocTinhResponse> data = new ArrayList<>();
