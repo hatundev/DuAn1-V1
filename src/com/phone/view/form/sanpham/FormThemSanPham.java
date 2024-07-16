@@ -11,6 +11,7 @@ import com.core.service.SanPhamService;
 import com.core.service.impl.ThuocTinhServiceImpl;
 import com.phone.custom.component.Notification;
 import com.phone.swing.Combobox;
+import java.awt.Panel;
 import java.util.List;
 
 /**
@@ -23,11 +24,17 @@ public class FormThemSanPham extends javax.swing.JFrame {
     private SanPhamService sanPhamService = new SanPhamService();
     private Notification notiSuccess;
     private Notification notiWarring;
+    private FormSanPham parentForm;
 
     /**
      * Creates new form FormThemSanPham
      */
     public FormThemSanPham() {
+        initComponents();
+    }
+
+    public FormThemSanPham(FormSanPham parentForm) {
+        this.parentForm = parentForm;
         initComponents();
         setLocationRelativeTo(null);
         init();
@@ -84,7 +91,7 @@ public class FormThemSanPham extends javax.swing.JFrame {
     }
 
     private ThemSanPhamRequest readForm() {
-        
+
         String name = txtTenSanPham.getText().trim();
         String stringPrice = txtGiaBan.getText();
         if (name.isEmpty()) {
@@ -491,6 +498,10 @@ public class FormThemSanPham extends javax.swing.JFrame {
             } else {
                 notiSuccess = new Notification(this, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, ketQua.getThongBao());
                 notiSuccess.showNotification();
+                
+                if (parentForm != null) {
+                    parentForm.init();
+                }
             }
         }
     }//GEN-LAST:event_btnThemActionPerformed

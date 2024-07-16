@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Panel;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import javax.swing.JDialog;
@@ -20,11 +21,11 @@ import org.jdesktop.animation.timing.TimingTargetAdapter;
  *
  * @author hatun
  */
-public class Notification extends javax.swing.JComponent {
+public class NotificationPanel extends javax.swing.JComponent {
 
     private JDialog dialog;
     private Animator animator;
-    private final Frame fram;
+    private final Panel fram;
     private boolean showing;
     private Thread thread;
     private int animate = 10;
@@ -36,7 +37,7 @@ public class Notification extends javax.swing.JComponent {
     /**
      * Creates new form Notification
      */
-    public Notification(Frame fram, Type type, Location location, String message) {
+    public NotificationPanel(Panel fram, Type type, Location location, String message) {
         this.fram = fram;
         this.type = type;
         this.location = location;
@@ -47,7 +48,7 @@ public class Notification extends javax.swing.JComponent {
 
     private void init(String message) {
         setBackground(Color.WHITE);
-        dialog = new JDialog(fram);
+        dialog = new JDialog();
         dialog.setUndecorated(true);
         dialog.setFocusableWindowState(false);
         dialog.setBackground(new Color(0, 0, 0, 0));
@@ -98,8 +99,8 @@ public class Notification extends javax.swing.JComponent {
                     int margin = 10;
                     int y = 0;
                     if (location == Location.TOP_CENTER) {
-                        x = 750;
-                        y = 50;
+                        x = fram.getX() + ((fram.getWidth() - dialog.getWidth()) / 2);
+                        y = fram.getY();
                         top_to_bot = true;
                     } else if (location == Location.TOP_RIGHT) {
                         x = fram.getX() + fram.getWidth() - dialog.getWidth() - margin;

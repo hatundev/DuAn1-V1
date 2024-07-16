@@ -8,8 +8,10 @@ import com.core.entity.ChiTietSanPham;
 import com.core.entity.KetQua;
 import com.core.entity.SanPham;
 import com.core.model.request.ThemSanPhamRequest;
+import com.core.model.response.SanPhamResponse;
 import com.core.repository.ChiTietSanPhamRepository;
 import com.core.repository.SanPhamRepository;
+import java.util.List;
 
 /**
  *
@@ -19,6 +21,14 @@ public class SanPhamService {
 
     private SanPhamRepository sanPhamRepository = new SanPhamRepository();
     private ChiTietSanPhamRepository chiTietSanPhamRepository = new ChiTietSanPhamRepository();
+    
+    public List<SanPhamResponse> getDataToTable(int page){
+        return sanPhamRepository.findByPage(page);
+    }
+    
+    public Integer getSize(){
+        return sanPhamRepository.getSize();
+    }
 
     private SanPham convertRequestToSanPham(ThemSanPhamRequest data) {
         SanPham sp = SanPham.builder()
@@ -56,6 +66,12 @@ public class SanPhamService {
                 .build();
         return ctsp;
     }
+    
+    
+    
+    
+    
+    
 
     public KetQua create(ThemSanPhamRequest themSanPhamRequest) {
         SanPham sp = convertRequestToSanPham(themSanPhamRequest);
@@ -75,6 +91,5 @@ public class SanPhamService {
             return new KetQua(0,"Sản phẩm đã tồn tại");
         }
     }
-;
 
 }

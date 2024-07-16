@@ -2,6 +2,7 @@ package com.phone.view.form;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Frame;
 import javax.swing.border.EmptyBorder;
 
 public class MainForm extends javax.swing.JPanel {
@@ -18,6 +19,10 @@ public class MainForm extends javax.swing.JPanel {
         add(form);
         repaint();
         revalidate();
+    }
+    
+    public Frame getFrame(Frame f){
+        return f;
     }
 
     @SuppressWarnings("unchecked")

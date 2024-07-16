@@ -1,12 +1,7 @@
-/**
- *
- * @author hatun
- */
-
-USE DuAn1;
+--USE DuAn1;
 
 -- Bảng HeDieuHanh
-INSERT INTO HeDieuHanh (ten, hoat_dong) VALUES ('Chưa nhập', 1);
+INSERT INTO HeDieuHanh (ten, hoat_dong) VALUES (N'Chưa nhập', 1);
 INSERT INTO HeDieuHanh (ten, hoat_dong) VALUES ('Android', 1);
 INSERT INTO HeDieuHanh (ten, hoat_dong) VALUES ('iOS', 1);
 INSERT INTO HeDieuHanh (ten, hoat_dong) VALUES ('Windows Phone', 1);
@@ -14,7 +9,7 @@ INSERT INTO HeDieuHanh (ten, hoat_dong) VALUES ('HarmonyOS', 1);
 INSERT INTO HeDieuHanh (ten, hoat_dong) VALUES ('BlackBerry OS', 1);
 
 -- Bảng ManHinh
-INSERT INTO ManHinh (ten, hoat_dong) VALUES ('Chưa nhập', 1);
+INSERT INTO ManHinh (ten, hoat_dong) VALUES (N'Chưa nhập', 1);
 INSERT INTO ManHinh (ten, hoat_dong) VALUES ('LCD', 1);
 INSERT INTO ManHinh (ten, hoat_dong) VALUES ('OLED', 1);
 INSERT INTO ManHinh (ten, hoat_dong) VALUES ('AMOLED', 1);
@@ -22,7 +17,7 @@ INSERT INTO ManHinh (ten, hoat_dong) VALUES ('Super AMOLED', 1);
 INSERT INTO ManHinh (ten, hoat_dong) VALUES ('Retina', 1);
 
 -- Bảng Hang
-INSERT INTO Hang (ten, hoat_dong) VALUES ('Chưa nhập', 1);
+INSERT INTO Hang (ten, hoat_dong) VALUES (N'Chưa nhập', 1);
 INSERT INTO Hang (ten, hoat_dong) VALUES ('Samsung', 1);
 INSERT INTO Hang (ten, hoat_dong) VALUES ('Apple', 1);
 INSERT INTO Hang (ten, hoat_dong) VALUES ('Huawei', 1);
@@ -30,7 +25,7 @@ INSERT INTO Hang (ten, hoat_dong) VALUES ('Xiaomi', 1);
 INSERT INTO Hang (ten, hoat_dong) VALUES ('Nokia', 1);
 
 -- Bảng CameraTruoc
-INSERT INTO CameraTruoc (ten, hoat_dong) VALUES ('Chưa nhập', 1);
+INSERT INTO CameraTruoc (ten, hoat_dong) VALUES (N'Chưa nhập', 1);
 INSERT INTO CameraTruoc (ten, hoat_dong) VALUES ('8MP', 1);
 INSERT INTO CameraTruoc (ten, hoat_dong) VALUES ('12MP', 1);
 INSERT INTO CameraTruoc (ten, hoat_dong) VALUES ('16MP', 1);
@@ -38,7 +33,7 @@ INSERT INTO CameraTruoc (ten, hoat_dong) VALUES ('20MP', 1);
 INSERT INTO CameraTruoc (ten, hoat_dong) VALUES ('32MP', 1);
 
 -- Bảng CameraSau
-INSERT INTO CameraSau (ten, hoat_dong) VALUES ('Chưa nhập', 1);
+INSERT INTO CameraSau (ten, hoat_dong) VALUES (N'Chưa nhập', 1);
 INSERT INTO CameraSau (ten, hoat_dong) VALUES ('12MP', 1);
 INSERT INTO CameraSau (ten, hoat_dong) VALUES ('24MP', 1);
 INSERT INTO CameraSau (ten, hoat_dong) VALUES ('48MP', 1);
@@ -46,7 +41,7 @@ INSERT INTO CameraSau (ten, hoat_dong) VALUES ('64MP', 1);
 INSERT INTO CameraSau (ten, hoat_dong) VALUES ('108MP', 1);
 
 -- Bảng Pin
-INSERT INTO Pin (ten, hoat_dong) VALUES ('Chưa nhập', 1);
+INSERT INTO Pin (ten, hoat_dong) VALUES (N'Chưa nhập', 1);
 INSERT INTO Pin (ten, hoat_dong) VALUES ('3000mAh', 1);
 INSERT INTO Pin (ten, hoat_dong) VALUES ('4000mAh', 1);
 INSERT INTO Pin (ten, hoat_dong) VALUES ('5000mAh', 1);
@@ -54,7 +49,7 @@ INSERT INTO Pin (ten, hoat_dong) VALUES ('6000mAh', 1);
 INSERT INTO Pin (ten, hoat_dong) VALUES ('7000mAh', 1);
 
 -- Bảng Chip
-INSERT INTO Chip (ten, hoat_dong) VALUES ('Chưa nhập', 1);
+INSERT INTO Chip (ten, hoat_dong) VALUES (N'Chưa nhập', 1);
 INSERT INTO Chip (ten, hoat_dong) VALUES ('Snapdragon 865', 1);
 INSERT INTO Chip (ten, hoat_dong) VALUES ('A14 Bionic', 1);
 INSERT INTO Chip (ten, hoat_dong) VALUES ('Kirin 9000', 1);
@@ -74,7 +69,7 @@ INSERT INTO SanPham (id_he_dieu_hanh, id_man_hinh, id_hang, id_camera_truoc, id_
 VALUES (5, 3, 5, 3, 3, 5, 5, 'Nokia 9 PureView', GETDATE(), 'admin', 1);
 
 -- Bảng Ram
-INSERT INTO Ram (ten, hoat_dong) VALUES ('Chưa nhập', 1);
+INSERT INTO Ram (ten, hoat_dong) VALUES (N'Chưa nhập', 1);
 INSERT INTO Ram (ten, hoat_dong) VALUES ('4GB', 1);
 INSERT INTO Ram (ten, hoat_dong) VALUES ('6GB', 1);
 INSERT INTO Ram (ten, hoat_dong) VALUES ('8GB', 1);
@@ -82,7 +77,7 @@ INSERT INTO Ram (ten, hoat_dong) VALUES ('12GB', 1);
 INSERT INTO Ram (ten, hoat_dong) VALUES ('16GB', 1);
 
 -- Bảng BoNho
-INSERT INTO BoNho (ten, hoat_dong) VALUES ('Chưa nhập', 1);
+INSERT INTO BoNho (ten, hoat_dong) VALUES (N'Chưa nhập', 1);
 INSERT INTO BoNho (ten, hoat_dong) VALUES ('64GB', 1);
 INSERT INTO BoNho (ten, hoat_dong) VALUES ('128GB', 1);
 INSERT INTO BoNho (ten, hoat_dong) VALUES ('256GB', 1);
@@ -90,12 +85,12 @@ INSERT INTO BoNho (ten, hoat_dong) VALUES ('512GB', 1);
 INSERT INTO BoNho (ten, hoat_dong) VALUES ('1TB', 1);
 
 -- Bảng MauSac
-INSERT INTO MauSac (ten, hoat_dong) VALUES ('Chưa nhập', 1);
-INSERT INTO MauSac (ten, hoat_dong) VALUES ('Đen', 1);
-INSERT INTO MauSac (ten, hoat_dong) VALUES ('Trắng', 1);
-INSERT INTO MauSac (ten, hoat_dong) VALUES ('Xanh', 1);
-INSERT INTO MauSac (ten, hoat_dong) VALUES ('Đỏ', 1);
-INSERT INTO MauSac (ten, hoat_dong) VALUES ('Vàng', 1);
+INSERT INTO MauSac (ten, hoat_dong) VALUES (N'Chưa nhập', 1);
+INSERT INTO MauSac (ten, hoat_dong) VALUES (N'Đen', 1);
+INSERT INTO MauSac (ten, hoat_dong) VALUES (N'Trắng', 1);
+INSERT INTO MauSac (ten, hoat_dong) VALUES (N'Xanh', 1);
+INSERT INTO MauSac (ten, hoat_dong) VALUES (N'Đỏ', 1);
+INSERT INTO MauSac (ten, hoat_dong) VALUES (N'Vàng', 1);
 
 -- Bảng ChiTietSanPham
 INSERT INTO ChiTietSanPham (id_san_pham, id_ram, id_bo_nho, id_mau_sac, ten_san_pham_chi_tiet, gia_ban, yeu_thich, ngay_tao, nguoi_tao, hoat_dong)
@@ -152,3 +147,48 @@ VALUES ('VOUCHER5', 'Giam 50%', 500, 500000, 50, 250000, '2023-01-01', '2023-12-
 -- Bảng HinhThucThanhToan
 INSERT INTO HinhThucThanhToan (ten, hoat_dong) VALUES ('Tien mat', 1);
 INSERT INTO HinhThucThanhToan (ten, hoat_dong) VALUES ('Chuyen khoan', 1);
+
+-- Gen thêm data
+-- Bảng SanPham
+INSERT INTO SanPham (id_he_dieu_hanh, id_man_hinh, id_hang, id_camera_truoc, id_camera_sau, id_chip, id_pin, ten_san_pham, ngay_tao, nguoi_tao, hoat_dong)
+VALUES (2, 4, 1, 3, 4, 1, 4, 'Samsung Galaxy S22', GETDATE(), 'admin', 1);
+INSERT INTO SanPham (id_he_dieu_hanh, id_man_hinh, id_hang, id_camera_truoc, id_camera_sau, id_chip, id_pin, ten_san_pham, ngay_tao, nguoi_tao, hoat_dong)
+VALUES (2, 3, 1, 4, 4, 1, 4, 'Samsung Galaxy S22 Ultra', GETDATE(), 'admin', 1);
+INSERT INTO SanPham (id_he_dieu_hanh, id_man_hinh, id_hang, id_camera_truoc, id_camera_sau, id_chip, id_pin, ten_san_pham, ngay_tao, nguoi_tao, hoat_dong)
+VALUES (2, 2, 1, 2, 3, 1, 3, 'Samsung Galaxy S21 FE', GETDATE(), 'admin', 1);
+INSERT INTO SanPham (id_he_dieu_hanh, id_man_hinh, id_hang, id_camera_truoc, id_camera_sau, id_chip, id_pin, ten_san_pham, ngay_tao, nguoi_tao, hoat_dong)
+VALUES (2, 1, 1, 1, 1, 1, 1, 'Samsung Galaxy A52', GETDATE(), 'admin', 1);
+INSERT INTO SanPham (id_he_dieu_hanh, id_man_hinh, id_hang, id_camera_truoc, id_camera_sau, id_chip, id_pin, ten_san_pham, ngay_tao, nguoi_tao, hoat_dong)
+VALUES (2, 1, 1, 1, 1, 1, 1, 'Samsung Galaxy A72', GETDATE(), 'admin', 1);
+INSERT INTO SanPham (id_he_dieu_hanh, id_man_hinh, id_hang, id_camera_truoc, id_camera_sau, id_chip, id_pin, ten_san_pham, ngay_tao, nguoi_tao, hoat_dong)
+VALUES (3, 3, 3, 3, 3, 3, 3, 'Huawei P50', GETDATE(), 'admin', 1);
+INSERT INTO SanPham (id_he_dieu_hanh, id_man_hinh, id_hang, id_camera_truoc, id_camera_sau, id_chip, id_pin, ten_san_pham, ngay_tao, nguoi_tao, hoat_dong)
+VALUES (3, 4, 3, 4, 4, 3, 4, 'Huawei Mate X2', GETDATE(), 'admin', 1);
+INSERT INTO SanPham (id_he_dieu_hanh, id_man_hinh, id_hang, id_camera_truoc, id_camera_sau, id_chip, id_pin, ten_san_pham, ngay_tao, nguoi_tao, hoat_dong)
+VALUES (3, 2, 3, 2, 2, 3, 2, 'Huawei Nova 8i', GETDATE(), 'admin', 1);
+INSERT INTO SanPham (id_he_dieu_hanh, id_man_hinh, id_hang, id_camera_truoc, id_camera_sau, id_chip, id_pin, ten_san_pham, ngay_tao, nguoi_tao, hoat_dong)
+VALUES (4, 1, 4, 1, 1, 4, 1, 'Xiaomi Redmi Note 11', GETDATE(), 'admin', 1);
+INSERT INTO SanPham (id_he_dieu_hanh, id_man_hinh, id_hang, id_camera_truoc, id_camera_sau, id_chip, id_pin, ten_san_pham, ngay_tao, nguoi_tao, hoat_dong)
+VALUES (4, 2, 4, 2, 2, 4, 2, 'Xiaomi Mi 10T Pro', GETDATE(), 'admin', 1);
+
+-- Bảng ChiTietSanPham
+INSERT INTO ChiTietSanPham (id_san_pham, id_ram, id_bo_nho, id_mau_sac, ten_san_pham_chi_tiet, gia_ban, yeu_thich, ngay_tao, nguoi_tao, hoat_dong)
+VALUES (6, 1, 1, 1, 'Samsung Galaxy S22 4GB 64GB Đen', 799.99, 1, GETDATE(), 'admin', 1);
+INSERT INTO ChiTietSanPham (id_san_pham, id_ram, id_bo_nho, id_mau_sac, ten_san_pham_chi_tiet, gia_ban, yeu_thich, ngay_tao, nguoi_tao, hoat_dong)
+VALUES (7, 2, 2, 2, 'Samsung Galaxy S22 Ultra 6GB 128GB Trắng', 999.99, 1, GETDATE(), 'admin', 1);
+INSERT INTO ChiTietSanPham (id_san_pham, id_ram, id_bo_nho, id_mau_sac, ten_san_pham_chi_tiet, gia_ban, yeu_thich, ngay_tao, nguoi_tao, hoat_dong)
+VALUES (8, 3, 3, 3, 'Samsung Galaxy S21 FE 8GB 256GB Xanh', 899.99, 1, GETDATE(), 'admin', 1);
+INSERT INTO ChiTietSanPham (id_san_pham, id_ram, id_bo_nho, id_mau_sac, ten_san_pham_chi_tiet, gia_ban, yeu_thich, ngay_tao, nguoi_tao, hoat_dong)
+VALUES (9, 4, 4, 4, 'Samsung Galaxy A52 12GB 512GB Đỏ', 699.99, 1, GETDATE(), 'admin', 1);
+INSERT INTO ChiTietSanPham (id_san_pham, id_ram, id_bo_nho, id_mau_sac, ten_san_pham_chi_tiet, gia_ban, yeu_thich, ngay_tao, nguoi_tao, hoat_dong)
+VALUES (10, 5, 5, 5, 'Samsung Galaxy A72 16GB 1TB Vàng', 899.99, 1, GETDATE(), 'admin', 1);
+INSERT INTO ChiTietSanPham (id_san_pham, id_ram, id_bo_nho, id_mau_sac, ten_san_pham_chi_tiet, gia_ban, yeu_thich, ngay_tao, nguoi_tao, hoat_dong)
+VALUES (11, 1, 1, 1, 'Huawei P50 4GB 64GB Đen', 699.99, 1, GETDATE(), 'admin', 1);
+INSERT INTO ChiTietSanPham (id_san_pham, id_ram, id_bo_nho, id_mau_sac, ten_san_pham_chi_tiet, gia_ban, yeu_thich, ngay_tao, nguoi_tao, hoat_dong)
+VALUES (12, 2, 2, 2, 'Huawei Mate X2 6GB 128GB Trắng', 1099.99, 1, GETDATE(), 'admin', 1);
+INSERT INTO ChiTietSanPham (id_san_pham, id_ram, id_bo_nho, id_mau_sac, ten_san_pham_chi_tiet, gia_ban, yeu_thich, ngay_tao, nguoi_tao, hoat_dong)
+VALUES (13, 3, 3, 3, 'Huawei Nova 8i 8GB 256GB Xanh', 499.99, 1, GETDATE(), 'admin', 1);
+INSERT INTO ChiTietSanPham (id_san_pham, id_ram, id_bo_nho, id_mau_sac, ten_san_pham_chi_tiet, gia_ban, yeu_thich, ngay_tao, nguoi_tao, hoat_dong)
+VALUES (14, 4, 4, 4, 'Xiaomi Redmi Note 11 12GB 512GB Đỏ', 399.99, 1, GETDATE(), 'admin', 1);
+INSERT INTO ChiTietSanPham (id_san_pham, id_ram, id_bo_nho, id_mau_sac, ten_san_pham_chi_tiet, gia_ban, yeu_thich, ngay_tao, nguoi_tao, hoat_dong)
+VALUES (15, 5, 5, 5, 'Xiaomi Mi 10T Pro 16GB 1TB Vàng', 599.99, 1, GETDATE(), 'admin', 1);

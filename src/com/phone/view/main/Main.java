@@ -3,6 +3,7 @@ package com.phone.view.main;
 import com.core.model.response.TaiKhoanResponse;
 import com.phone.custom.component.Header;
 import com.phone.custom.component.Menu;
+import com.phone.custom.component.Notification;
 import com.phone.custom.event.EventMenuSelected;
 import com.phone.custom.event.EventShowPopupMenu;
 import com.phone.custom.swing.MenuItem;
@@ -19,9 +20,12 @@ import org.jdesktop.animation.timing.TimingTargetAdapter;
 import com.phone.custom.swingacrylic.SwingAcrylic;
 import com.phone.view.form.banhang.FormBanHang;
 import com.phone.view.form.hoadon.FormHoaDon;
+import com.phone.view.form.sanpham.ChiTietSanPham;
 import com.phone.view.form.sanpham.FormSanPham;
 import com.phone.view.form.thuoctinh.FormThuocTinh;
 import com.phone.view.form.tongquan.FormHome;
+import java.awt.Frame;
+import java.awt.Panel;
 import javax.swing.JOptionPane;
 
 public class Main extends javax.swing.JFrame {
@@ -31,6 +35,8 @@ public class Main extends javax.swing.JFrame {
     private Header header;
     private MainForm main;
     private Animator animator;
+    private Notification notiSuccess;
+    private Notification notiWarring;
 
     public Main() {
         initComponents();
@@ -42,6 +48,15 @@ public class Main extends javax.swing.JFrame {
     private void close() {
         this.dispose();
     }
+    
+    public Frame getFrame(){
+        return this;
+    }
+    
+    public MainForm getPanel(){
+        return main;
+    }
+    
     
     private void init() {
         layout = new MigLayout("fill", "10[]10[100%, fill]10", "10[fill, top]10");
@@ -65,7 +80,6 @@ public class Main extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(rootPane, "Bạn không có quyền xem phần này");
                         main.showForm(new FormBanHang());
                     }
-
                 } else if (menuIndex == 1) {
                     main.showForm(new FormBanHang());
                     if (subMenuIndex == 0) {
@@ -87,7 +101,7 @@ public class Main extends javax.swing.JFrame {
                         lbView.setText("Quản lý sản phẩm");
                         main.showForm(new FormSanPham());
                     } else if (subMenuIndex == 1) {
-                        main.showForm(new FormSanPham());
+                        main.showForm(new ChiTietSanPham());
                     }
                 } else if (menuIndex == 4) {
                     main.showForm(new FormThuocTinh());
@@ -167,6 +181,15 @@ public class Main extends javax.swing.JFrame {
     public void setAccount(TaiKhoanResponse tk) {
         lbUserName.setText(tk.getTenNhanVien());
         lbRole.setText(tk.getTenChucVu());
+    }
+    
+    public void viewDetailProduct(){
+        main.showForm(new ChiTietSanPham());
+    }
+    
+    public void showNotiWarring(String message){
+        notiWarring = new Notification(this, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, message);
+        notiWarring.showNotification();
     }
 
     @SuppressWarnings("unchecked")
