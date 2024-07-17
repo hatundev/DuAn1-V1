@@ -24,6 +24,8 @@ import lombok.ToString;
 public class SanPhamResponse {
 
     private Integer stt;
+    
+    private Integer id;
 
     private String tenSanPham;
 

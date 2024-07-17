@@ -5,14 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="37b74f5d-f02b-4a5e-94b9-211bc9ec6b93" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/nbproject/private/private.properties" beforeDir="false" afterPath="$PROJECT_DIR$/nbproject/private/private.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nbproject/private/private.xml" beforeDir="false" afterPath="$PROJECT_DIR$/nbproject/private/private.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nbproject/project.properties" beforeDir="false" afterPath="$PROJECT_DIR$/nbproject/project.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/phone/custom/component/Profile.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/phone/custom/component/Profile.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/phone/custom/component/Profile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/phone/custom/component/Profile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/phone/view/form/sanpham/FormSanPham.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/phone/view/form/sanpham/FormSanPham.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/core/entity/Imei.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/core/entity/Imei.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/core/model/request/ThuocTinhRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/core/model/request/ThuocTinhRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/core/model/response/SanPhamResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/core/model/response/SanPhamResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/core/repository/ChiTietSanPhamRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/core/repository/ChiTietSanPhamRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/core/repository/SanPhamRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/core/repository/SanPhamRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/core/repository/ThuocTinhRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/core/repository/ThuocTinhRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/core/service/SanPhamService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/core/service/SanPhamService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/core/service/ThuocTinhService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/core/service/ThuocTinhService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/core/service/impl/ThuocTinhServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/core/service/impl/ThuocTinhServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/phone/custom/component/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/phone/custom/component/Menu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/phone/view/form/sanpham/ChiTietSanPham.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/phone/view/form/sanpham/ChiTietSanPham.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/phone/view/form/sanpham/ChiTietSanPham.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/phone/view/form/sanpham/ChiTietSanPham.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/phone/view/form/sanpham/FormSanPham.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/phone/view/form/sanpham/FormSanPham.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/phone/view/main/Main.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/phone/view/main/Main.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/phone/view/form/sanpham/FormThemNhanh.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/phone/view/form/sanpham/FormThemNhanh.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/phone/view/form/sanpham/FormThemNhanh.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/phone/view/form/sanpham/FormThemNhanh.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/phone/view/form/sanpham/FormThemSanPham.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/phone/view/form/sanpham/FormThemSanPham.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/phone/view/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/phone/view/main/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -63,6 +73,8 @@
       <updated>1721037540536</updated>
       <workItem from="1721037542181" duration="1923000" />
       <workItem from="1721046238302" duration="14000" />
+      <workItem from="1721144641698" duration="48000" />
+      <workItem from="1721198796101" duration="72000" />
     </task>
     <servers />
   </component>

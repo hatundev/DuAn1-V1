@@ -97,6 +97,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Th&#xea;m"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonPrimary1ActionPerformed"/>
+      </Events>
     </Component>
     <Component class="com.phone.swing.ButtonDanger" name="H&#x1ee7;y">
       <Properties>

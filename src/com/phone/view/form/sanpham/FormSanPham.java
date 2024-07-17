@@ -7,7 +7,6 @@ package com.phone.view.form.sanpham;
 import com.core.model.response.SanPhamResponse;
 import com.core.service.SanPhamService;
 import com.phone.custom.component.Notification;
-import com.phone.view.form.MainForm;
 import com.phone.view.main.Main;
 import java.awt.Color;
 import java.awt.Font;
@@ -48,9 +47,8 @@ public class FormSanPham extends javax.swing.JPanel {
 //    }
 
     public void init() {
-        
         page = 1;
-        max = (int) Math.ceil(sanPhamService.getSize() / 8);
+        max = (int) Math.floor(sanPhamService.getSize() / 8);
         defaultTableModel = (DefaultTableModel) tbList.getModel();
         tbList.getTableHeader().setFont(new Font("Arial", Font.BOLD, 15));
         tbList.getTableHeader().setBackground(new Color(13, 202, 240));
@@ -338,8 +336,9 @@ public class FormSanPham extends javax.swing.JPanel {
     private void tbListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbListMouseClicked
         // TODO add your handling code here:
         //parentForm1.showForm(new ChiTietSanPham());
-            Main mainFrame = (Main) SwingUtilities.getWindowAncestor(this);
-            mainFrame.viewDetailProduct();
+        int idCTSP = list.get(tbList.getSelectedRow()).getId();
+        Main mainFrame = (Main) SwingUtilities.getWindowAncestor(this);
+        mainFrame.viewDetailProduct(idCTSP);
     }//GEN-LAST:event_tbListMouseClicked
 
 

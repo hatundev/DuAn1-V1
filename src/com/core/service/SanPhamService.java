@@ -8,6 +8,7 @@ import com.core.entity.ChiTietSanPham;
 import com.core.entity.KetQua;
 import com.core.entity.SanPham;
 import com.core.model.request.ThemSanPhamRequest;
+import com.core.model.response.ChiTietSanPhamResponse;
 import com.core.model.response.SanPhamResponse;
 import com.core.repository.ChiTietSanPhamRepository;
 import com.core.repository.SanPhamRepository;
@@ -68,10 +69,6 @@ public class SanPhamService {
     }
     
     
-    
-    
-    
-    
 
     public KetQua create(ThemSanPhamRequest themSanPhamRequest) {
         SanPham sp = convertRequestToSanPham(themSanPhamRequest);
@@ -92,4 +89,7 @@ public class SanPhamService {
         }
     }
 
+    public ChiTietSanPhamResponse findByID(int id){
+        return chiTietSanPhamRepository.findByID(id);
+    }
 }

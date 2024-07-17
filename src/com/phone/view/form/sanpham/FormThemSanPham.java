@@ -31,6 +31,7 @@ public class FormThemSanPham extends javax.swing.JFrame {
      */
     public FormThemSanPham() {
         initComponents();
+        
     }
 
     public FormThemSanPham(FormSanPham parentForm) {
@@ -41,7 +42,7 @@ public class FormThemSanPham extends javax.swing.JFrame {
         reset();
     }
 
-    private void init() {
+    public void init() {
         fillDataToCombobox(cbChip, service.findAll("Chip"));
         fillDataToCombobox(cbHeDieuHanh, service.findAll("HeDieuHanh"));
         fillDataToCombobox(cbCameraSau, service.findAll("CameraSau"));
@@ -52,15 +53,31 @@ public class FormThemSanPham extends javax.swing.JFrame {
         fillDataToCombobox(cbRam, service.findAll("Ram"));
         fillDataToCombobox(cbBoNho, service.findAll("BoNho"));
         fillDataToCombobox(cbMauSac, service.findAll("MauSac"));
+        resetComboBox(cbChip);
+        resetComboBox(cbHeDieuHanh);
+        resetComboBox(cbCameraSau);
+        resetComboBox(cbCameraTruoc);
+        resetComboBox(cbPin);
+        resetComboBox(cbHang);
+        resetComboBox(cbManHinh);
+        resetComboBox(cbRam);
+        resetComboBox(cbBoNho);
+        resetComboBox(cbMauSac);
+    }
+    
+    public void resetComboBox(Combobox combo){
+        combo.setSelectedIndex(-1);
     }
 
-    private void openThemNhanh(String name) {
-        FormThemNhanh formThemNhanh = new FormThemNhanh();
-        formThemNhanh.handleEvent(name);
+    private void openThemNhanh(String name, String tenBang) {
+        FormThemNhanh formThemNhanh = new FormThemNhanh(this);
+        formThemNhanh.handleEvent(name, tenBang);
+        
         formThemNhanh.setVisible(true);
     }
 
     private void fillDataToCombobox(Combobox combo, List<ThuocTinhResponse> listData) {
+        combo.removeAllItems();
         for (ThuocTinhResponse thuocTinhResponse : listData) {
             combo.addItem(thuocTinhResponse.getName());
         }
@@ -430,52 +447,52 @@ public class FormThemSanPham extends javax.swing.JFrame {
 
     private void btnThemChipMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemChipMouseClicked
         // TODO add your handling code here:
-        openThemNhanh("chip");
+        openThemNhanh("chip","Chip");
     }//GEN-LAST:event_btnThemChipMouseClicked
 
     private void btnThemHeDieuHanhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemHeDieuHanhMouseClicked
         // TODO add your handling code here:
-        openThemNhanh("hệ điều hành");
+        openThemNhanh("hệ điều hành","HeDieuHanh");
     }//GEN-LAST:event_btnThemHeDieuHanhMouseClicked
 
     private void btnThemCameraSauMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemCameraSauMouseClicked
         // TODO add your handling code here:
-        openThemNhanh("camera sau");
+        openThemNhanh("camera sau","CameraSau");
     }//GEN-LAST:event_btnThemCameraSauMouseClicked
 
     private void btnCameraTruocMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCameraTruocMouseClicked
         // TODO add your handling code here:
-        openThemNhanh("camera trước");
+        openThemNhanh("camera trước","CameraTruoc");
     }//GEN-LAST:event_btnCameraTruocMouseClicked
 
     private void btnThemPinMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemPinMouseClicked
         // TODO add your handling code here:
-        openThemNhanh("pin");
+        openThemNhanh("pin", "Pin");
     }//GEN-LAST:event_btnThemPinMouseClicked
 
     private void btnThemHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemHangMouseClicked
         // TODO add your handling code here:
-        openThemNhanh("hãng");
+        openThemNhanh("hãng", "Hang");
     }//GEN-LAST:event_btnThemHangMouseClicked
 
     private void btnThemManHinhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemManHinhMouseClicked
         // TODO add your handling code here:
-        openThemNhanh("màn hình");
+        openThemNhanh("màn hình", "ManHinh");
     }//GEN-LAST:event_btnThemManHinhMouseClicked
 
     private void btnThemRamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemRamMouseClicked
         // TODO add your handling code here:
-        openThemNhanh("ram");
+        openThemNhanh("ram", "Ram");
     }//GEN-LAST:event_btnThemRamMouseClicked
 
     private void btnThemBoNhoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemBoNhoMouseClicked
         // TODO add your handling code here:
-        openThemNhanh("bộ nhớ");
+        openThemNhanh("bộ nhớ", "BoNho");
     }//GEN-LAST:event_btnThemBoNhoMouseClicked
 
     private void btnThemMauSacMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemMauSacMouseClicked
         // TODO add your handling code here:
-        openThemNhanh("màu sắc");
+        openThemNhanh("màu sắc", "MauSac");
     }//GEN-LAST:event_btnThemMauSacMouseClicked
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed

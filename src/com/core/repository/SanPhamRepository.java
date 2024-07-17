@@ -21,16 +21,17 @@ public class SanPhamRepository {
 
     public List<SanPhamResponse> findByPage(int page) {
         String sql = """
-                     SELECT stt, ten_san_pham, ten_hang, ten_ram, ten_bo_nho, ten_mau_sac, so_luong, gia_ban
+                     SELECT stt,id, ten_san_pham, ten_hang, ten_ram, ten_bo_nho, ten_mau_sac, so_luong, gia_ban
                      FROM (
                          SELECT 
                              ROW_NUMBER() OVER (ORDER BY ctsp.id DESC) AS 'stt',
+                             ctsp.id as 'id',
                              sp.ten_san_pham AS 'ten_san_pham',
                              h.ten AS 'ten_hang',
                              r.ten AS 'ten_ram',
                              bn.ten AS 'ten_bo_nho',
                              ms.ten AS 'ten_mau_sac',
-                             (SELECT COUNT(*) FROM Imei i WHERE i.id_chi_tiet_san_pham = ctsp.id) AS 'so_luong',
+                             (SELECT COUNT(*) FROM Imei i WHERE i.id_chi_tiet_san_pham = ctsp.id and i.hoat_dong= 1) AS 'so_luong',
                              ctsp.gia_ban AS 'gia_ban'
                          FROM ChiTietSanPham ctsp 
                          JOIN SanPham sp ON ctsp.id_san_pham = sp.id 
@@ -38,6 +39,7 @@ public class SanPhamRepository {
                          JOIN Ram r ON ctsp.id_ram = r.id 
                          JOIN BoNho bn ON ctsp.id_bo_nho = bn.id 
                          JOIN MauSac ms ON ctsp.id_mau_sac = ms.id 
+                         WHERE ctsp.hoat_dong = 1
                      ) AS RankedProducts
                      WHERE stt >= ? AND  stt < ?;
                      """;
@@ -49,6 +51,7 @@ public class SanPhamRepository {
             while (rs.next()) {
                 SanPhamResponse sp = new SanPhamResponse();
                 sp.setStt(rs.getInt("stt"));
+                sp.setId(rs.getInt("id"));
                 sp.setTenSanPham(rs.getString("ten_san_pham"));
                 sp.setHang(rs.getString("ten_hang"));
                 sp.setRam(rs.getString("ten_ram"));
@@ -139,7 +142,7 @@ public class SanPhamRepository {
             ps.setInt(6, sp.getIdChip());
             ps.setInt(7, sp.getIdHang());
             ps.setInt(8, sp.getIdPin());
-            ps.setString(9, "Null");
+            ps.setString(9, "admin");
             ps.setInt(10, 1);
             if (ps.executeUpdate() == 0) {
                 return false;

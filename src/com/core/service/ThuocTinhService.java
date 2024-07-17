@@ -4,6 +4,7 @@
  */
 package com.core.service;
 
+import com.core.entity.KetQua;
 import com.core.model.request.ThuocTinhRequest;
 import com.core.model.response.ThuocTinhResponse;
 import java.util.List;
@@ -21,7 +22,7 @@ public interface ThuocTinhService {
     ThuocTinhResponse findById(String tenBang, Integer id);
     
     //Thêm mới đối tượng
-    Boolean create(String tenBang, ThuocTinhRequest data);
+    KetQua create(String tenBang, String data);
     
     //Cập nhập đối tượng theo id
     Boolean update(String tenBang, Integer id, ThuocTinhRequest data);

@@ -4,6 +4,7 @@
  */
 package com.core.repository;
 
+import com.core.entity.KetQua;
 import com.core.model.request.ThuocTinhRequest;
 import com.core.model.response.ThuocTinhResponse;
 import com.core.tool.DBConnect;
@@ -64,44 +65,45 @@ public class ThuocTinhRepository {
         }
     }
 
-    public Boolean create(String tenBang, ThuocTinhRequest data) {
+    public KetQua create(String tenBang, String data) {
         String sql = String.format("""
                                     INSERT INTO %s (ten,hoat_dong)
                                     VALUES (?,?)
                                     """, tenBang);
         try (Connection conn = DBConnect.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, data.getName());
-            ps.setInt(2, data.getHoatDong());
+            ps.setString(1, data);
+
+            ps.setInt(2, 1);
             int result = ps.executeUpdate();
-            if (result == 0) {
-                return false;
-            } else {
-                return true;
+            if (result != 0) {
+                return new KetQua(1, "Thanh cong");
             }
         } catch (Exception e) {
-            return false;
+
         }
+        return new KetQua(0, "That bai");
     }
 
     public Boolean update(String tenBang, Integer id, ThuocTinhRequest data) {
-        String sql = String.format("""
-                                   UPDATE %s
-                                   SET ten = ? and hoat_dong = ?
-                                   WHERE id = ?
-                                   """, tenBang);
-        try (Connection conn = DBConnect.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, data.getName());
-            ps.setInt(2, data.getHoatDong());
-            ps.setInt(3, id);
-            int result = ps.executeUpdate();
-            if (result == 0) {
-                return false;
-            } else {
-                return true;
-            }
-        } catch (Exception e) {
-            return false;
-        }
+//        String sql = String.format("""
+//                                   UPDATE %s
+//                                   SET ten = ? and hoat_dong = ?
+//                                   WHERE id = ?
+//                                   """, tenBang);
+//        try (Connection conn = DBConnect.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+//            ps.setString(1, data.getName());
+//            ps.setInt(2, data.getHoatDong());
+//            ps.setInt(3, id);
+//            int result = ps.executeUpdate();
+//            if (result == 0) {
+//                return false;
+//            } else {
+//                return true;
+//            }
+//        } catch (Exception e) {
+//            return false;
+//        }
+        return false;
     }
 
     public Boolean delete(String tenBang, Integer id) {

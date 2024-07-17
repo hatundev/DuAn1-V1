@@ -4,6 +4,7 @@
  */
 package com.core.service.impl;
 
+import com.core.entity.KetQua;
 import com.core.model.request.ThuocTinhRequest;
 import com.core.model.response.ThuocTinhResponse;
 import com.core.repository.ThuocTinhRepository;
@@ -29,7 +30,7 @@ public class ThuocTinhServiceImpl implements ThuocTinhService {
     }
 
     @Override
-    public Boolean create(String tenBang, ThuocTinhRequest data) {
+    public KetQua create(String tenBang, String data) {
         return repo.create(tenBang, data);
     }
 

@@ -23,6 +23,8 @@ import lombok.ToString;
 @ToString
 public class Imei {
     
+    private Integer stt;
+    
     private Integer id;
 
     private Integer idChiTietSanPham;
@@ -31,4 +33,9 @@ public class Imei {
 
     private Integer hoatDong;
     
+    public Object[] toRowTable(){
+        return new Object[]{
+            stt, maImei
+        };
+    }
 }

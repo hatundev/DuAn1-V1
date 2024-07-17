@@ -61,7 +61,7 @@ public class Menu extends PanelTransparent {
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/phone/resources/icons/1.png")), "Tổng quan", "Thống kê", "Quản lý nhân viên"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/phone/resources/icons/2.png")), "Bán hàng", "Lên đơn hàng"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/phone/resources/icons/3.png")), "Hóa đơn", "Danh sách hóa đơn", "Hóa đơn chi tiết"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/phone/resources/icons/4.png")), "Sản phẩm", "Thêm sản phẩm", "Kiểm hàng", "Khuyến Mãi"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/phone/resources/icons/4.png")), "Sản phẩm", "Quản lý sản phẩm", "Chi tiết sản phẩm", "Quản lý thuộc tính"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/phone/resources/icons/5.png")), "Thuộc tính", "Danh sách thuộc tính", "Chi tiết thuộc tính"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/phone/resources/icons/6.png")), "Khách hàng", "Danh sách khách hàng", "Chi tiết khách hàng"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/phone/resources/icons/7.png")), "Khuyến mại", "Danh sách khuyến mại", "Chi tiết khuyến mại"));

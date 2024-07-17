@@ -101,6 +101,7 @@ public class Main extends javax.swing.JFrame {
                         lbView.setText("Quản lý sản phẩm");
                         main.showForm(new FormSanPham());
                     } else if (subMenuIndex == 1) {
+                        lbView.setText("Chi tiết sản phẩm");
                         main.showForm(new ChiTietSanPham());
                     }
                 } else if (menuIndex == 4) {
@@ -183,13 +184,18 @@ public class Main extends javax.swing.JFrame {
         lbRole.setText(tk.getTenChucVu());
     }
     
-    public void viewDetailProduct(){
-        main.showForm(new ChiTietSanPham());
+    public void viewDetailProduct(int id){
+        main.showForm(new ChiTietSanPham(id));
     }
     
     public void showNotiWarring(String message){
         notiWarring = new Notification(this, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, message);
         notiWarring.showNotification();
+    }
+    
+    public void showNotiSuccess(String message){
+        notiSuccess = new Notification(this, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, message);
+        notiSuccess.showNotification();
     }
 
     @SuppressWarnings("unchecked")

@@ -4,12 +4,22 @@
  */
 package com.phone.view.form.sanpham;
 
+import com.core.entity.KetQua;
+import com.core.service.ThuocTinhService;
+import com.core.service.impl.ThuocTinhServiceImpl;
+import com.phone.custom.component.Notification;
+
 /**
  *
  * @author hatun
  */
 public class FormThemNhanh extends javax.swing.JFrame {
 
+    private String tenBang;
+    private Notification notiSuccess;
+    private Notification notiWarring;
+    private ThuocTinhServiceImpl impl = new ThuocTinhServiceImpl();
+    private FormThemSanPham parentForm;
     /**
      * Creates new form FormThemNhanh
      */
@@ -18,8 +28,15 @@ public class FormThemNhanh extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
     
-    public void handleEvent(String name) {
+    public FormThemNhanh(FormThemSanPham parentForm) {
+        this.parentForm = parentForm;
+        initComponents();
+        setLocationRelativeTo(null);
+    }
+
+    public void handleEvent(String name, String tenBang1) {
         lbName.setText("Tên " + name + ":");
+        tenBang = tenBang1;
     }
 
     /**
@@ -47,6 +64,11 @@ public class FormThemNhanh extends javax.swing.JFrame {
         lbName.setText("Tên hệ điều hành: ");
 
         buttonPrimary1.setText("Thêm");
+        buttonPrimary1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonPrimary1ActionPerformed(evt);
+            }
+        });
 
         Hủy.setText("Hủy");
         Hủy.addActionListener(new java.awt.event.ActionListener() {
@@ -102,6 +124,26 @@ public class FormThemNhanh extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_HủyActionPerformed
+
+    private void buttonPrimary1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPrimary1ActionPerformed
+        // TODO add your handling code here:
+        if (txtValue.getText().isEmpty()) {
+            notiWarring = new Notification(this, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Chưa nhập");
+            notiWarring.showNotification();
+            txtValue.requestFocus();
+        } else {
+            KetQua ketQua = impl.create(tenBang, txtValue.getText());
+            if (ketQua.getIdKetQua() == 1) {
+                this.dispose();
+                if (parentForm != null) {
+                    parentForm.init();
+                }
+            } else {
+                notiWarring = new Notification(this, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "That bai");
+                notiWarring.showNotification();
+            }
+        }
+    }//GEN-LAST:event_buttonPrimary1ActionPerformed
 
     /**
      * @param args the command line arguments

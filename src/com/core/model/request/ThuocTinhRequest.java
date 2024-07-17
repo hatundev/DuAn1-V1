@@ -25,6 +25,6 @@ public class ThuocTinhRequest {
     
     private String name;
     
-    private Integer hoatDong;
+    //private Integer hoatDong;
     
 }

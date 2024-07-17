@@ -5,6 +5,7 @@
 package com.core.repository;
 
 import com.core.entity.ChiTietSanPham;
+import com.core.model.response.ChiTietSanPhamResponse;
 import com.core.tool.DBConnect;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -44,7 +45,102 @@ public class ChiTietSanPhamRepository {
             return null;
         }
     }
+
+    public ChiTietSanPhamResponse findByID(int id) {
+        String sql = """
+                 SELECT 
+                    ctsp.id AS idChiTietSanPham,
+                    ctsp.id_san_pham AS idSanPham,
+                    r.ten AS tenRam,
+                    bn.ten AS tenBoNho,
+                    ms.ten AS tenMauSac,
+                    ctsp.ten_san_pham_chi_tiet AS tenSanPhamChiTiet,
+                    (SELECT COUNT(*) FROM Imei i WHERE i.id_chi_tiet_san_pham = ctsp.id and hoat_dong = 1) as soLuong,
+                    ctsp.gia_ban AS giaBan,
+                    he.ten AS tenHeDieuHanh,
+                    mh.ten AS tenManHinh,
+                    h.ten AS tenHang,
+                    ct.ten AS tenCameraTruoc,
+                    cs.ten AS tenCameraSau,
+                    c.ten AS tenChip,
+                    p.ten AS tenPin,
+                    sp.ten_san_pham AS tenSanPham,
+                    ctsp.ngay_tao AS ngayTao,
+                    ctsp.ngay_sua AS ngaySua,
+                    ctsp.nguoi_tao AS nguoiTao,
+                    ctsp.nguoi_sua AS nguoiSua,
+                    ctsp.yeu_thich AS yeuThich,
+                    ctsp.hoat_dong AS hoatDong
+                FROM 
+                    ChiTietSanPham ctsp
+                LEFT JOIN
+                    Imei i on ctsp.id = i.id_chi_tiet_san_pham
+                JOIN 
+                    SanPham sp ON ctsp.id_san_pham = sp.id
+                JOIN 
+                    Ram r ON ctsp.id_ram = r.id
+                JOIN 
+                    BoNho bn ON ctsp.id_bo_nho = bn.id
+                JOIN 
+                    MauSac ms ON ctsp.id_mau_sac = ms.id
+                JOIN 
+                    HeDieuHanh he ON sp.id_he_dieu_hanh = he.id
+                JOIN 
+                    ManHinh mh ON sp.id_man_hinh = mh.id
+                JOIN 
+                    Hang h ON sp.id_hang = h.id
+                JOIN 
+                    CameraTruoc ct ON sp.id_camera_truoc = ct.id
+                JOIN 
+                    CameraSau cs ON sp.id_camera_sau = cs.id
+                JOIN 
+                    Chip c ON sp.id_chip = c.id
+                JOIN 
+                    Pin p ON sp.id_pin = p.id
+                WHERE 
+                    ctsp.id = ?
+                 """;
+
+        try (Connection conn = DBConnect.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return ChiTietSanPhamResponse.builder()
+                        .idChiTietSanPham(rs.getInt("idChiTietSanPham"))
+                        .idSanPham(rs.getInt("idSanPham"))
+                        .tenRam(rs.getString("tenRam"))
+                        .tenBoNho(rs.getString("tenBoNho"))
+                        .tenMauSac(rs.getString("tenMauSac"))
+                        .tenSanPhamChiTiet(rs.getString("tenSanPhamChiTiet"))
+                        .soLuong(rs.getInt("soLuong"))
+                        .giaBan(rs.getFloat("giaBan"))
+                        .tenHeDieuHanh(rs.getString("tenHeDieuHanh"))
+                        .tenManHinh(rs.getString("tenManHinh"))
+                        .tenHang(rs.getString("tenHang"))
+                        .tenCameraTruoc(rs.getString("tenCameraTruoc"))
+                        .tenCameraSau(rs.getString("tenCameraSau"))
+                        .tenChip(rs.getString("tenChip"))
+                        .tenPin(rs.getString("tenPin"))
+                        .tenSanPham(rs.getString("tenSanPham"))
+                        .ngayTao(rs.getString("ngayTao"))
+                        .ngaySua(rs.getString("ngaySua"))
+                        .nguoiTao(rs.getString("nguoiTao"))
+                        .nguoiSua(rs.getString("nguoiSua"))
+                        .yeuThich(rs.getInt("yeuThich"))
+                        .hoatDong(rs.getInt("hoatDong"))
+                        .build();
+            }
+        } catch (Exception e) {
+           return null;
+        }
+        return null; 
+    }
     
+    public static void main(String[] args) {
+        ChiTietSanPhamRepository ctspr = new ChiTietSanPhamRepository();
+        System.out.println(ctspr.findByID(2).toString());
+    }
+
     public boolean create(ChiTietSanPham ctsp) {
         String sql = """
                      INSERT INTO
@@ -73,6 +169,25 @@ public class ChiTietSanPhamRepository {
             ps.setInt(8, 0);
             ps.setInt(9, 1);
             if (ps.executeUpdate() == 0) {
+                return false;
+            } else {
+                return true;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    
+    public boolean delete(int id) {
+        String sql = """
+                    UPDATE ChiTietSanPham
+                         SET hoat_dong = 0
+                         WHERE id = ?
+                    """;
+        try (Connection conn = DBConnect.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            int result = ps.executeUpdate();
+            if (result == 0) {
                 return false;
             } else {
                 return true;

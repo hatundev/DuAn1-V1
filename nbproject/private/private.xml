@@ -3,12 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/hatun/Workspace/DuAn1-V1/src/com/phone/view/form/sanpham/FormSanPham.java</file>
             <file>file:/home/hatun/Workspace/DuAn1-V1/src/com/core/service/SanPhamService.java</file>
-            <file>file:/home/hatun/Workspace/DuAn1-V1/src/com/core/repository/SanPhamRepository.java</file>
+            <file>file:/home/hatun/Workspace/DuAn1-V1/src/com/core/model/response/ChiTietSanPhamResponse.java</file>
+            <file>file:/home/hatun/Workspace/DuAn1-V1/src/com/core/model/request/ChiTietSanPhamRequest.java</file>
+            <file>file:/home/hatun/Workspace/DuAn1-V1/src/com/core/service/ChiTietSanPhamService.java</file>
+            <file>file:/home/hatun/Workspace/DuAn1-V1/src/com/core/model/request/ThemSanPhamRequest.java</file>
             <file>file:/home/hatun/Workspace/DuAn1-V1/src/com/phone/view/form/sanpham/ChiTietSanPham.java</file>
-            <file>file:/home/hatun/Workspace/DuAn1-V1/src/com/phone/view/main/Main.java</file>
             <file>file:/home/hatun/Workspace/DuAn1-V1/src/com/core/repository/ChiTietSanPhamRepository.java</file>
+            <file>file:/home/hatun/Workspace/DuAn1-V1/src/com/core/entity/ChiTietSanPham.java</file>
+            <file>file:/home/hatun/Workspace/DuAn1-V1/src/com/core/entity/SanPham.java</file>
         </group>
     </open-files>
 </project-private>
