@@ -27,27 +27,27 @@ public class ChiTietSanPhamRequest {
 
     private Integer idChiTietSanPham;
 
-    private String tenHeDieuHanh;
+    private int idHeDieuHanh;
 
-    private String tenManHinh;
+    private int idManHinh;
 
-    private String tenHang;
+    private int idHang;
 
-    private String tenCameraTruoc;
+    private int idCameraTruoc;
 
-    private String tenCameraSau;
+    private int idCameraSau;
 
-    private String tenChip;
+    private int idChip;
 
-    private String tenPin;
+    private int idPin;
 
     private String tenSanPham;
 
-    private String tenRam;
+    private int idRam;
 
-    private String tenBoNho;
+    private int idBoNho;
 
-    private String tenMauSac;
+    private int idMauSac;
 
     private String tenSanPhamChiTiet;
 

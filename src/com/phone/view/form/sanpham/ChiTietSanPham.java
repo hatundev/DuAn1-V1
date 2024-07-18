@@ -110,17 +110,32 @@ public class ChiTietSanPham extends javax.swing.JPanel {
         }
     }
 
-    private int getidSelectedCombobox(Combobox combo) {
-        
-        return service. combo.getSelectedIndex()
+    private int getidSelectedCombobox(Combobox combo, String tenBang) {
+        return service.findAll(tenBang).get(combo.getSelectedIndex()).getId();
     }
 
     private ChiTietSanPhamRequest readForm() {
         ChiTietSanPhamRequest request = ChiTietSanPhamRequest.builder()
                 .idSanPham(data.getIdSanPham())
-                .idHeDieuHanh(HEIGHT)
+                .idChiTietSanPham(data.getIdChiTietSanPham())
+                .idHeDieuHanh(getidSelectedCombobox(cbHeDieuHanh,"HeDieuHanh"))
+                .idManHinh(getidSelectedCombobox(cbManHinh, "ManHinh"))
+                .idHang(getidSelectedCombobox(cbHang,"Hang"))
+                .idCameraTruoc(getidSelectedCombobox(cbCameraTruoc, "CameraTruoc"))
+                .idCameraSau(getidSelectedCombobox(cbCameraSau, "CameraSau"))
+                .idChip(getidSelectedCombobox(cbChip, "Chip"))
+                .idPin(getidSelectedCombobox(cbPin, "Pin"))
+                .tenSanPham(txtTenSP.getText())
+                .idRam(getidSelectedCombobox(cbRam,"Ram"))
+                .idBoNho(getidSelectedCombobox(cbBoNho, "BoNho"))
+                .idMauSac(getidSelectedCombobox(cbMauSac,"MauSac"))
+                .tenSanPhamChiTiet(txtTenSP.getText()+String.valueOf(cbRam.getSelectedItem())+String.valueOf(cbBoNho.getSelectedItem())+ String.valueOf(cbMauSac.getSelectedItem()))
+                .giaBan(Float.valueOf(txtGiaBan.getText()))
+                .yeuThich(rdbYeuThich.isSelected() == true ? 1: 0)
                 .ngayTao(data.getNgayTao())
+                .nguoiTao(data.getNguoiTao())
                 .ngaySua("")
+                .nguoiSua("")
                 .nguoiTao(data.getNguoiTao())
                 .nguoiSua("")
                 .yeuThich(rdbYeuThich.isSelected() == true ? 1 : 0)
