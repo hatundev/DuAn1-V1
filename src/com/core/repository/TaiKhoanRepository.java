@@ -14,13 +14,14 @@ import java.util.List;
 
 /**
  *
- * @author hatun
+ * @author hatunlý
  */
 public class TaiKhoanRepository {
 
     public List<TaiKhoanResponse> findAll() {
         List<TaiKhoanResponse> list = new ArrayList<>();
         String sql = "SELECT\n"
+                
                 + "	ma_nhan_vien,\n"
                 + "	mat_khau,\n"
                 + "	ten_nhan_vien,\n"
@@ -48,15 +49,18 @@ public class TaiKhoanRepository {
     }
 
     public TaiKhoanResponse findByMaNhanVien(String username) {
-        String sql = "SELECT\n"
-                + "	ma_nhan_vien,\n"
-                + "	mat_khau,\n"
-                + "	ten_nhan_vien,\n"
-                + "	chuc_vu\n"
-                + "FROM\n"
-                + "	NhanVien nv\n"
-                + "WHERE \n"
-                + "	ma_nhan_vien = ?";
+        String sql = """
+                     SELECT  
+                     	id,
+                     	ma_nhan_vien,
+                     	mat_khau,
+                     	ten_nhan_vien,
+                     	chuc_vu
+                     FROM
+                     	NhanVien nv
+                     WHERE
+                     	ma_nhan_vien = ?
+                     """;
 
         try {
             Connection conn = DBConnect.getConnection();
@@ -65,6 +69,7 @@ public class TaiKhoanRepository {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 TaiKhoanResponse tk = new TaiKhoanResponse();
+                tk.setId(rs.getInt("id"));
                 tk.setUsername(rs.getString("ma_nhan_vien"));
                 tk.setPassword(rs.getString("mat_khau"));
                 tk.setTenNhanVien(rs.getString("ten_nhan_vien"));

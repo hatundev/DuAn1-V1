@@ -4,6 +4,7 @@
  */
 package com.core.service.impl;
 
+import com.core.entity.KetQua;
 import com.core.model.request.LoginRequest;
 import com.core.model.response.TaiKhoanResponse;
 import com.core.repository.TaiKhoanRepository;
@@ -28,31 +29,35 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
         return repo.findByMaNhanVien(maNhanVien);
     }
 
-    public boolean isQuanLy(TaiKhoanResponse tk) {
-        if (tk.getTenChucVu().equals("Quản lý")) {
-            return true;
-        }
-        return false;
-    }
+//    public boolean isQuanLy(String username) {
+//        if (tk.getTenChucVu().equals("Quản lý")) {
+//            return true;
+//        }
+//        return false;
+//    }
 
-    public int login(LoginRequest login) {
+    @Override
+    public KetQua login(LoginRequest login) {
         TaiKhoanResponse tk = repo.findByMaNhanVien(login.getUsername());
-        System.out.println(tk.toString());
         if (tk == null) {
-            return 0;
+            return new KetQua(0, "Tai khoan khong ton tai!");
         } else {
             if (tk.getPassword().equals(login.getPassword())) {
-                return 1;
+                if (tk.getTenChucVu().equals("Quản lý")) {
+                    return new KetQua(1, "Quanly");
+                } else {
+                    return new KetQua(1, "NhanVien");
+                }
             } else {
-                return -1;
+                return new KetQua(0, "Sai mat khau!");
             }
         }
     }
-    
+
     public static void main(String[] args) {
         TaiKhoanServiceImpl tk = new TaiKhoanServiceImpl();
-        int x = tk.login(new LoginRequest("NV001","password1"));
-        System.out.println(x);
+        KetQua x = tk.login(new LoginRequest("NV001", "password1"));
+        System.out.println(x.toString());
     }
 
 }

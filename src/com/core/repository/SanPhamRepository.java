@@ -153,5 +153,44 @@ public class SanPhamRepository {
             return false;
         }
     }
+    
+    public boolean update(SanPham sp) {
+        String sql = """
+                     INSERT INTO
+                     	SanPham (
+                     		ten_san_pham,
+                     		id_he_dieu_hanh,
+                     		id_man_hinh,
+                     		id_camera_truoc,
+                     		id_camera_sau,
+                     		id_chip,
+                                id_hang,
+                     		id_pin,
+                     		ngay_tao,
+                     		nguoi_tao,
+                     		hoat_dong
+                     	)
+                     VALUES (?, ?, ?, ?, ?, ?,?, ?, GETDATE(), ?, ?)
+                     """;
+        try (Connection conn = DBConnect.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, sp.getTenSanPham());
+            ps.setInt(2, sp.getIdHeDieuHanh());
+            ps.setInt(3, sp.getIdManHinh());
+            ps.setInt(4, sp.getIdCameraTruoc());
+            ps.setInt(5, sp.getIdCameraSau());
+            ps.setInt(6, sp.getIdChip());
+            ps.setInt(7, sp.getIdHang());
+            ps.setInt(8, sp.getIdPin());
+            ps.setString(9, sp.get);
+            ps.setInt(10, 1);
+            if (ps.executeUpdate() == 0) {
+                return false;
+            } else {
+                return true;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
 }

@@ -37,27 +37,41 @@ public class Main extends javax.swing.JFrame {
     private Animator animator;
     private Notification notiSuccess;
     private Notification notiWarring;
+    private TaiKhoanResponse account;
 
     public Main() {
         initComponents();
         init();
-        lbView.setText("Quản lý sản phẩm");
-        main.showForm(new FormSanPham());
     }
     
+    public void showByRole(){
+        if (account.getTenChucVu().equals("Quản lý")) {
+            main.showForm(new FormHome());
+        } else {
+            FormBanHang formBanHang = new FormBanHang();
+            formBanHang.setAccount(account);
+            main.showForm(formBanHang);
+        }
+    }
+
     private void close() {
         this.dispose();
     }
-    
-    public Frame getFrame(){
-        return this;
-    }
-    
-    public MainForm getPanel(){
+
+    public MainForm getPanel() {
         return main;
     }
-    
-    
+
+    public void setAccount(TaiKhoanResponse tk) {
+        account = tk;
+        lbUserName.setText(account.getTenNhanVien());
+        lbRole.setText(account.getTenChucVu());
+    }
+
+    public TaiKhoanResponse pushAccount() {
+        return account;
+    }
+
     private void init() {
         layout = new MigLayout("fill", "10[]10[100%, fill]10", "10[fill, top]10");
         bg.setLayout(layout);
@@ -67,7 +81,6 @@ public class Main extends javax.swing.JFrame {
         menu.addEvent(new EventMenuSelected() {
             @Override
             public void menuSelected(int menuIndex, int subMenuIndex) {
-                
                 if (menuIndex == 0) {
                     if (lbRole.getText().equals("Quản lý")) {
                         main.showForm(new FormHome());
@@ -78,15 +91,14 @@ public class Main extends javax.swing.JFrame {
                         }
                     } else {
                         JOptionPane.showMessageDialog(rootPane, "Bạn không có quyền xem phần này");
-                        main.showForm(new FormBanHang());
+                        FormBanHang formBanHang = new FormBanHang();
+                        formBanHang.setAccount(account);
+                        main.showForm(formBanHang);
                     }
                 } else if (menuIndex == 1) {
-                    main.showForm(new FormBanHang());
-                    if (subMenuIndex == 0) {
-                        main.showForm(new FormBanHang());
-                    } else if (subMenuIndex == 1) {
-                        main.showForm(new FormBanHang());
-                    }
+                    FormBanHang formBanHang = new FormBanHang();
+                    formBanHang.setAccount(account);
+                    main.showForm(formBanHang);
                 } else if (menuIndex == 2) {
                     main.showForm(new FormHoaDon());
                     if (subMenuIndex == 0) {
@@ -119,7 +131,7 @@ public class Main extends javax.swing.JFrame {
                         main.showForm(new FormKhachHang());
                     }
                 } else if (menuIndex == 6) {
-                    
+
                     Test test = new Test();
                     test.setVisible(true);
                     close();
@@ -166,34 +178,31 @@ public class Main extends javax.swing.JFrame {
                 menu.setShowMenu(!menu.isShowMenu());
                 menu.setEnableMenu(true);
             }
-
         };
         animator = new Animator(500, target);
         animator.setResolution(0);
         animator.setDeceleration(0.5f);
         animator.setAcceleration(0.5f);
+
         if (lbRole.getText().equals("Quản lý")) {
             main.showForm(new FormHome());
         } else {
-            main.showForm(new FormBanHang());
+            FormBanHang formBanHang = new FormBanHang();
+            formBanHang.setAccount(account);
+            main.showForm(formBanHang);
         }
     }
 
-    public void setAccount(TaiKhoanResponse tk) {
-        lbUserName.setText(tk.getTenNhanVien());
-        lbRole.setText(tk.getTenChucVu());
-    }
-    
-    public void viewDetailProduct(int id){
+    public void viewDetailProduct(int id) {
         main.showForm(new ChiTietSanPham(id));
     }
-    
-    public void showNotiWarring(String message){
+
+    public void showNotiWarring(String message) {
         notiWarring = new Notification(this, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, message);
         notiWarring.showNotification();
     }
-    
-    public void showNotiSuccess(String message){
+
+    public void showNotiSuccess(String message) {
         notiSuccess = new Notification(this, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, message);
         notiSuccess.showNotification();
     }
@@ -258,8 +267,8 @@ public class Main extends javax.swing.JFrame {
             .addGroup(panelHeaderLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addComponent(lbView)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1399, Short.MAX_VALUE)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1383, Short.MAX_VALUE)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
                 .addGroup(panelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbUserName, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -334,8 +343,8 @@ public class Main extends javax.swing.JFrame {
     private void btnLogOutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLogOutMouseClicked
         // TODO add your handling code here:
         this.dispose();
-        //Login login = new Login();
-        //login.setVisible(true);
+        Login login = new Login();
+        login.setVisible(true);
     }//GEN-LAST:event_btnLogOutMouseClicked
 
     public static void main(String args[]) {

@@ -10,6 +10,7 @@ public class MainForm extends javax.swing.JPanel {
     public MainForm() {
         initComponents();
         setOpaque(false);
+        //setSize(1500,825);
         setLayout(new BorderLayout());
         setBorder(new EmptyBorder(10, 20, 10, 20));
     }

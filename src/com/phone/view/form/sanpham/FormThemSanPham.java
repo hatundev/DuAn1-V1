@@ -25,15 +25,15 @@ public class FormThemSanPham extends javax.swing.JFrame {
     private Notification notiSuccess;
     private Notification notiWarring;
     private FormSanPham parentForm;
+    private String account;
 
     /**
      * Creates new form FormThemSanPham
      */
     public FormThemSanPham() {
         initComponents();
-        
     }
-
+    
     public FormThemSanPham(FormSanPham parentForm) {
         this.parentForm = parentForm;
         initComponents();

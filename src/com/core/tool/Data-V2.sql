@@ -120,6 +120,10 @@ INSERT INTO KhachHang (ten_khach_hang, so_dien_thoai, hoat_dong) VALUES ('Hoang 
 
 -- Bảng NhanVien
 INSERT INTO NhanVien (ma_nhan_vien, ten_nhan_vien, so_dien_thoai, dia_chi, cccd, mat_khau, chuc_vu, ngay_tao, nguoi_tao, hoat_dong) 
+VALUES ('1', 'Nguyen Van F', '0123', '123 Le Loi', '0123', '1', 1, GETDATE(), 'admin', 1);
+INSERT INTO NhanVien (ma_nhan_vien, ten_nhan_vien, so_dien_thoai, dia_chi, cccd, mat_khau, chuc_vu, ngay_tao, nguoi_tao, hoat_dong) 
+VALUES ('2', 'Nguyen Van F', '01234', '123 Le Loi', '012345', '2', 0, GETDATE(), 'admin', 1);
+INSERT INTO NhanVien (ma_nhan_vien, ten_nhan_vien, so_dien_thoai, dia_chi, cccd, mat_khau, chuc_vu, ngay_tao, nguoi_tao, hoat_dong) 
 VALUES ('NV001', 'Nguyen Van F', '0123456780', '123 Le Loi', '012345678901', 'password1', 1, GETDATE(), 'admin', 1);
 INSERT INTO NhanVien (ma_nhan_vien, ten_nhan_vien, so_dien_thoai, dia_chi, cccd, mat_khau, chuc_vu, ngay_tao, nguoi_tao, hoat_dong) 
 VALUES ('NV002', 'Tran Thi G', '0987654320', '456 Tran Hung Dao', '012345678902', 'password2', 0, GETDATE(), 'admin', 1);
@@ -133,6 +137,8 @@ INSERT INTO NhanVien (ma_nhan_vien, ten_nhan_vien, so_dien_thoai, dia_chi, cccd,
 VALUES ('NV006', N'Nguyễn Thanh Tùng', '0334455660', '654 Nguyen Thi Minh Khai', '012345678906', '123', 1, GETDATE(), 'admin', 1);
 
 -- Bảng PhieuGiamGia
+INSERT INTO PhieuGiamGia (ma_voucher, ten_voucher, so_luong, gia_tri_toi_thieu_ap_dung, phan_tram_giam, so_tien_duoc_giam_toi_da, ngay_bat_dau, ngay_ket_thuc, mo_ta, ngay_tao, nguoi_tao, hoat_dong)
+VALUES ('VOUCHER0', 'Giam 10%', 100, 100, 10, 50, '2023-01-01', '2023-12-31', 'Giam 10% cho don hang tren 100000', GETDATE(), 'admin', 1);
 INSERT INTO PhieuGiamGia (ma_voucher, ten_voucher, so_luong, gia_tri_toi_thieu_ap_dung, phan_tram_giam, so_tien_duoc_giam_toi_da, ngay_bat_dau, ngay_ket_thuc, mo_ta, ngay_tao, nguoi_tao, hoat_dong)
 VALUES ('VOUCHER1', 'Giam 10%', 100, 100000, 10, 50000, '2023-01-01', '2023-12-31', 'Giam 10% cho don hang tren 100000', GETDATE(), 'admin', 1);
 INSERT INTO PhieuGiamGia (ma_voucher, ten_voucher, so_luong, gia_tri_toi_thieu_ap_dung, phan_tram_giam, so_tien_duoc_giam_toi_da, ngay_bat_dau, ngay_ket_thuc, mo_ta, ngay_tao, nguoi_tao, hoat_dong)

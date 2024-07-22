@@ -6,7 +6,9 @@ package com.core.repository;
 
 import com.core.entity.Imei;
 import com.core.entity.KetQua;
+import com.core.model.response.ImeiResponse;
 import com.core.model.response.SanPhamResponse;
+import com.core.service.ImeiService;
 import com.core.tool.DBConnect;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -52,8 +54,8 @@ public class ImeiRepository {
             return null;
         }
     }
-    
-    public KetQua create(int id, String ma){
+
+    public KetQua create(int id, String ma) {
         String sql = """
                      INSERT INTO
                      	Imei (
@@ -65,18 +67,18 @@ public class ImeiRepository {
                      """;
         try (Connection conn = DBConnect.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, id);
-            ps.setString(2,ma);
+            ps.setString(2, ma);
             ps.setInt(3, 1);
             if (ps.executeUpdate() != 0) {
                 return new KetQua(1, "Thêm imei thành công!");
             }
         } catch (Exception e) {
-           
+
         }
-        return new KetQua(0 , "Mã Imei đã tồn tại!");
+        return new KetQua(0, "Mã Imei đã tồn tại!");
     }
-    
-    public KetQua update(int id, String ma){
+
+    public KetQua update(int id, String ma) {
         String sql = """
                      UPDATE Imei
                      SET ma_imei = ?
@@ -84,30 +86,61 @@ public class ImeiRepository {
                      """;
         try (Connection conn = DBConnect.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(2, id);
-            ps.setString(1,ma);
+            ps.setString(1, ma);
             if (ps.executeUpdate() != 0) {
                 return new KetQua(1, "Sửa imei thành công!");
             }
         } catch (Exception e) {
-           
+
         }
-        return new KetQua(0 , "Sửa thất bại!");
+        return new KetQua(0, "Sửa thất bại!");
     }
-    
-    public KetQua delete(int id){
+
+    public KetQua delete(String imei) {
         String sql = """
                     UPDATE Imei
                     SET hoat_dong = 0 
-                    WHERE id = ?
+                    WHERE ma_imei = ?
                      """;
         try (Connection conn = DBConnect.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1,id);
+            ps.setString(1, imei);
             if (ps.executeUpdate() != 0) {
                 return new KetQua(1, "Xóa imei thành công!");
             }
         } catch (Exception e) {
-           
+
         }
-        return new KetQua(0 , "Xóa thất bại!");
+        return new KetQua(0, "Xóa thất bại!");
+    }
+
+    public ImeiResponse findByImei(String imei) {
+        String sql = """
+                     SELECT
+                     	ctsp.ten_san_pham_chi_tiet ,
+                     	i.ma_imei ,
+                     	ctsp.gia_ban 
+                     FROM
+                     	Imei i
+                     JOIN ChiTietSanPham ctsp on
+                     	i.id_chi_tiet_san_pham = ctsp.id
+                     WHERE
+                     	i.ma_imei = ? and i.hoat_dong = 1
+                     """;
+        try (Connection conn = DBConnect.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, imei);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                ImeiResponse data = new ImeiResponse(rs.getString("ten_san_pham_chi_tiet"), rs.getString("ma_imei"), rs.getFloat("gia_ban"));
+                return data;
+            }
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
+    
+    public static void main(String[] args) {
+        ImeiService imeiService = new ImeiService();
+        System.out.println(imeiService.delete("123458").toString());
     }
 }

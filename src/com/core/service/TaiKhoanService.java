@@ -4,6 +4,8 @@
  */
 package com.core.service;
 
+import com.core.entity.KetQua;
+import com.core.model.request.LoginRequest;
 import com.core.model.response.TaiKhoanResponse;
 import java.util.List;
 
@@ -17,4 +19,5 @@ public interface TaiKhoanService {
     
     TaiKhoanResponse findByMaNhanVien(String maNhanVien);
     
+    KetQua login(LoginRequest data);
 }

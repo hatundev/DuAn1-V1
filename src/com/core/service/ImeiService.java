@@ -6,6 +6,7 @@ package com.core.service;
 
 import com.core.entity.Imei;
 import com.core.entity.KetQua;
+import com.core.model.response.ImeiResponse;
 import com.core.repository.ImeiRepository;
 import java.util.List;
 
@@ -20,6 +21,10 @@ public class ImeiService {
     public List<Imei> findByIdCTSP(int id) {
         return imeiRepository.findByIdCTSP(id);
     }
+    
+    public ImeiResponse findByImei(String imei) {
+        return imeiRepository.findByImei(imei);
+    }
 
     public KetQua create(int id, String ma){
         return imeiRepository.create(id, ma);
@@ -29,7 +34,7 @@ public class ImeiService {
         return imeiRepository.update(id, ma);
     }
     
-    public KetQua delete(int id){
+    public KetQua delete(String id){
         return imeiRepository.delete(id);
     }
 }

@@ -22,6 +22,8 @@ import lombok.ToString;
 @Builder
 @ToString
 public class TaiKhoanResponse {
+    
+    private Integer id;
 
     private String username;
 
