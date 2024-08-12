@@ -6,15 +6,22 @@ package com.phone.view.form.sanpham;
 
 import com.core.entity.Imei;
 import com.core.entity.KetQua;
+import com.core.entity.SanPham;
 import com.core.model.request.ChiTietSanPhamRequest;
 import com.core.model.response.ChiTietSanPhamResponse;
+import com.core.model.response.TaiKhoanResponse;
 import com.core.model.response.ThuocTinhResponse;
+import com.core.repository.ChiTietSanPhamRepository;
+import com.core.repository.ImeiRepository;
+import com.core.repository.SanPhamRepository;
 import com.core.service.ChiTietSanPhamService;
 import com.core.service.ImeiService;
 import com.core.service.SanPhamService;
 import com.core.service.impl.ThuocTinhServiceImpl;
+import com.phone.custom.component.Notification;
 import com.phone.swing.Combobox;
 import com.phone.view.main.Main;
+import com.util.Util;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -27,6 +34,10 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ChiTietSanPham extends javax.swing.JPanel {
 
+    private Util util = new Util();
+    private ImeiRepository imeiRepository = new ImeiRepository();
+    private ChiTietSanPhamRepository chiTietSanPhamRepository = new ChiTietSanPhamRepository();
+    private SanPhamRepository sanPhamRepository = new SanPhamRepository();
     private ChiTietSanPhamService chiTietSanPhamService = new ChiTietSanPhamService();
     private SanPhamService sanPhamService = new SanPhamService();
     private ThuocTinhServiceImpl service = new ThuocTinhServiceImpl();
@@ -34,6 +45,11 @@ public class ChiTietSanPham extends javax.swing.JPanel {
     private ImeiService imeiService = new ImeiService();
     private List<Imei> listImei = new ArrayList<>();
     private DefaultTableModel defaultTableModel = new DefaultTableModel();
+    private TaiKhoanResponse account;
+    private Notification notiSuccess;
+    private Notification notiWarringl;
+    private int idChiTietSanPham;
+    private ChiTietSanPham ctsp;
 
     /**
      * Creates new form ChiTietSanPham
@@ -50,11 +66,26 @@ public class ChiTietSanPham extends javax.swing.JPanel {
         init(id);
     }
 
+    public void setAccount(TaiKhoanResponse tk) {
+        this.account = tk;
+    }
+
+    private void showWarring(String message) {
+        Main mainFrame = (Main) SwingUtilities.getWindowAncestor(this);
+        mainFrame.showNotiWarring(message);
+    }
+
+    private void showSuccess(String message) {
+        Main mainFrame = (Main) SwingUtilities.getWindowAncestor(this);
+        mainFrame.showNotiSuccess(message);
+    }
+
     public void init(int id) {
+        idChiTietSanPham = id;
         fillDataCombobox();
-        data = sanPhamService.findByID(id);
+        data = sanPhamService.findByID(idChiTietSanPham);
         fillForm(data);
-        fillTableImei(id);
+        fillTableImei(idChiTietSanPham);
 
     }
 
@@ -72,7 +103,7 @@ public class ChiTietSanPham extends javax.swing.JPanel {
         txtTenSP.setText(data.getTenSanPham());
         txtSoLuong.setText(String.valueOf(data.getSoLuong()));
         txtTenCTSP.setText(data.getTenSanPhamChiTiet());
-        txtGiaBan.setText(String.valueOf(data.getGiaBan()));
+        txtGiaBan.setText(util.convertFloatToMoney(data.getGiaBan()));
         cbHang.setSelectedItem(data.getTenHang());
         cbHeDieuHanh.setSelectedItem(data.getTenHeDieuHanh());
         cbChip.setSelectedItem(data.getTenChip());
@@ -92,16 +123,16 @@ public class ChiTietSanPham extends javax.swing.JPanel {
     }
 
     private void fillDataCombobox() {
-        fillDataToCombobox(cbChip, service.findAll("Chip"));
-        fillDataToCombobox(cbHeDieuHanh, service.findAll("HeDieuHanh"));
-        fillDataToCombobox(cbCameraSau, service.findAll("CameraSau"));
-        fillDataToCombobox(cbCameraTruoc, service.findAll("CameraTruoc"));
-        fillDataToCombobox(cbPin, service.findAll("Pin"));
-        fillDataToCombobox(cbHang, service.findAll("Hang"));
-        fillDataToCombobox(cbManHinh, service.findAll("ManHinh"));
-        fillDataToCombobox(cbRam, service.findAll("Ram"));
-        fillDataToCombobox(cbBoNho, service.findAll("BoNho"));
-        fillDataToCombobox(cbMauSac, service.findAll("MauSac"));
+        fillDataToCombobox(cbChip, service.findAllHD("Chip"));
+        fillDataToCombobox(cbHeDieuHanh, service.findAllHD("HeDieuHanh"));
+        fillDataToCombobox(cbCameraSau, service.findAllHD("CameraSau"));
+        fillDataToCombobox(cbCameraTruoc, service.findAllHD("CameraTruoc"));
+        fillDataToCombobox(cbPin, service.findAllHD("Pin"));
+        fillDataToCombobox(cbHang, service.findAllHD("Hang"));
+        fillDataToCombobox(cbManHinh, service.findAllHD("ManHinh"));
+        fillDataToCombobox(cbRam, service.findAllHD("Ram"));
+        fillDataToCombobox(cbBoNho, service.findAllHD("BoNho"));
+        fillDataToCombobox(cbMauSac, service.findAllHD("MauSac"));
     }
 
     private void fillDataToCombobox(Combobox combo, List<ThuocTinhResponse> listData) {
@@ -111,36 +142,66 @@ public class ChiTietSanPham extends javax.swing.JPanel {
     }
 
     private int getidSelectedCombobox(Combobox combo, String tenBang) {
-        return service.findAll(tenBang).get(combo.getSelectedIndex()).getId();
+        return service.findAllHD(tenBang).get(combo.getSelectedIndex()).getId();
     }
 
     private ChiTietSanPhamRequest readForm() {
-        ChiTietSanPhamRequest request = ChiTietSanPhamRequest.builder()
-                .idSanPham(data.getIdSanPham())
-                .idChiTietSanPham(data.getIdChiTietSanPham())
-                .idHeDieuHanh(getidSelectedCombobox(cbHeDieuHanh,"HeDieuHanh"))
-                .idManHinh(getidSelectedCombobox(cbManHinh, "ManHinh"))
-                .idHang(getidSelectedCombobox(cbHang,"Hang"))
-                .idCameraTruoc(getidSelectedCombobox(cbCameraTruoc, "CameraTruoc"))
-                .idCameraSau(getidSelectedCombobox(cbCameraSau, "CameraSau"))
-                .idChip(getidSelectedCombobox(cbChip, "Chip"))
-                .idPin(getidSelectedCombobox(cbPin, "Pin"))
-                .tenSanPham(txtTenSP.getText())
-                .idRam(getidSelectedCombobox(cbRam,"Ram"))
-                .idBoNho(getidSelectedCombobox(cbBoNho, "BoNho"))
-                .idMauSac(getidSelectedCombobox(cbMauSac,"MauSac"))
-                .tenSanPhamChiTiet(txtTenSP.getText()+String.valueOf(cbRam.getSelectedItem())+String.valueOf(cbBoNho.getSelectedItem())+ String.valueOf(cbMauSac.getSelectedItem()))
-                .giaBan(Float.valueOf(txtGiaBan.getText()))
-                .yeuThich(rdbYeuThich.isSelected() == true ? 1: 0)
-                .ngayTao(data.getNgayTao())
-                .nguoiTao(data.getNguoiTao())
-                .ngaySua("")
-                .nguoiSua("")
-                .nguoiTao(data.getNguoiTao())
-                .nguoiSua("")
-                .yeuThich(rdbYeuThich.isSelected() == true ? 1 : 0)
-                .hoatDong(1)
-                .build();
+        ChiTietSanPhamRequest request = null;
+        try {
+            request = ChiTietSanPhamRequest.builder()
+                    .idSanPham(data.getIdSanPham())
+                    .idChiTietSanPham(data.getIdChiTietSanPham())
+                    .idHeDieuHanh(getidSelectedCombobox(cbHeDieuHanh, "HeDieuHanh"))
+                    .idManHinh(getidSelectedCombobox(cbManHinh, "ManHinh"))
+                    .idHang(getidSelectedCombobox(cbHang, "Hang"))
+                    .idCameraTruoc(getidSelectedCombobox(cbCameraTruoc, "CameraTruoc"))
+                    .idCameraSau(getidSelectedCombobox(cbCameraSau, "CameraSau"))
+                    .idChip(getidSelectedCombobox(cbChip, "Chip"))
+                    .idPin(getidSelectedCombobox(cbPin, "Pin"))
+                    .tenSanPham(txtTenSP.getText())
+                    .idRam(getidSelectedCombobox(cbRam, "Ram"))
+                    .idBoNho(getidSelectedCombobox(cbBoNho, "BoNho"))
+                    .idMauSac(getidSelectedCombobox(cbMauSac, "MauSac"))
+                    .tenSanPhamChiTiet(txtTenSP.getText() + " " + String.valueOf(cbRam.getSelectedItem()) + " " + String.valueOf(cbBoNho.getSelectedItem()) + " " + String.valueOf(cbMauSac.getSelectedItem()))
+                    .giaBan(Float.valueOf(txtGiaBan.getText()))
+                    .yeuThich(rdbYeuThich.isSelected() == true ? 1 : 0)
+                    .ngayTao(data.getNgayTao())
+                    .nguoiTao(data.getNguoiTao())
+                    .ngaySua("")
+                    .nguoiSua("")
+                    .nguoiTao(data.getNguoiTao())
+                    .nguoiSua("")
+                    .yeuThich(rdbYeuThich.isSelected() == true ? 1 : 0)
+                    .hoatDong(1)
+                    .build();
+        } catch (NumberFormatException numberFormatException) {
+            request = ChiTietSanPhamRequest.builder()
+                    .idSanPham(data.getIdSanPham())
+                    .idChiTietSanPham(data.getIdChiTietSanPham())
+                    .idHeDieuHanh(getidSelectedCombobox(cbHeDieuHanh, "HeDieuHanh"))
+                    .idManHinh(getidSelectedCombobox(cbManHinh, "ManHinh"))
+                    .idHang(getidSelectedCombobox(cbHang, "Hang"))
+                    .idCameraTruoc(getidSelectedCombobox(cbCameraTruoc, "CameraTruoc"))
+                    .idCameraSau(getidSelectedCombobox(cbCameraSau, "CameraSau"))
+                    .idChip(getidSelectedCombobox(cbChip, "Chip"))
+                    .idPin(getidSelectedCombobox(cbPin, "Pin"))
+                    .tenSanPham(txtTenSP.getText())
+                    .idRam(getidSelectedCombobox(cbRam, "Ram"))
+                    .idBoNho(getidSelectedCombobox(cbBoNho, "BoNho"))
+                    .idMauSac(getidSelectedCombobox(cbMauSac, "MauSac"))
+                    .tenSanPhamChiTiet(txtTenSP.getText() + " " + String.valueOf(cbRam.getSelectedItem()) + " " + String.valueOf(cbBoNho.getSelectedItem()) + " " + String.valueOf(cbMauSac.getSelectedItem()))
+                    .giaBan(data.getGiaBan())
+                    .yeuThich(rdbYeuThich.isSelected() == true ? 1 : 0)
+                    .ngayTao(data.getNgayTao())
+                    .nguoiTao(data.getNguoiTao())
+                    .ngaySua("")
+                    .nguoiSua("")
+                    .nguoiTao(data.getNguoiTao())
+                    .nguoiSua("")
+                    .yeuThich(rdbYeuThich.isSelected() == true ? 1 : 0)
+                    .hoatDong(1)
+                    .build();
+        }
         return request;
     }
 
@@ -191,7 +252,7 @@ public class ChiTietSanPham extends javax.swing.JPanel {
         btnSuaImei = new com.phone.swing.ButtonWarring();
         btnXoaImei = new com.phone.swing.ButtonDanger();
 
-        setBackground(new java.awt.Color(255, 204, 204));
+        setBackground(new java.awt.Color(147, 158, 168));
 
         jLabel1.setFont(new java.awt.Font("Liberation Sans", 3, 24)); // NOI18N
         jLabel1.setText("CHI TIẾT SẢN PHẨM");
@@ -209,6 +270,7 @@ public class ChiTietSanPham extends javax.swing.JPanel {
 
         cbChip.setLabeText("Chip");
 
+        rdbYeuThich.setBackground(new java.awt.Color(147, 158, 168));
         rdbYeuThich.setText("Yêu thích");
 
         cbManHinh.setLabeText("Màn hình");
@@ -277,13 +339,13 @@ public class ChiTietSanPham extends javax.swing.JPanel {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                                .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(txtTenCTSP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(30, 30, 30)
+                        .addGap(27, 27, 27)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtGiaBan, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
-                            .addComponent(txtSoLuong, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(txtSoLuong, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                            .addComponent(txtGiaBan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cbHang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -300,9 +362,9 @@ public class ChiTietSanPham extends javax.swing.JPanel {
                             .addComponent(cbMauSac, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(345, 345, 345)
-                        .addComponent(btnSua, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSua, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnXoa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnXoa, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtNgayTao, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
@@ -411,7 +473,15 @@ public class ChiTietSanPham extends javax.swing.JPanel {
             new String [] {
                 "STT", "Imei"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tbImei.setRowHeight(50);
         tbImei.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -536,16 +606,133 @@ public class ChiTietSanPham extends javax.swing.JPanel {
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         // TODO add your handling code here:
-        int input = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn không?", "Sửa sản phẩm",
-                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
+//        Kiem tra sp moi va sp cu xem nguoi dung co thay doi khong
+        ChiTietSanPhamRequest ctspNew = readForm();
+        SanPham spNew = SanPham.builder()
+                .tenSanPham(ctspNew.getTenSanPham())
+                .idChip(ctspNew.getIdChip())
+                .idCameraSau(ctspNew.getIdCameraSau())
+                .idCameraTruoc(ctspNew.getIdCameraTruoc())
+                .idHang(ctspNew.getIdHang())
+                .idHeDieuHanh(ctspNew.getIdHeDieuHanh())
+                .idManHinh(ctspNew.getIdManHinh())
+                .idPin(ctspNew.getIdPin())
+                .ngayTao("")
+                .nguoiTao("")
+                .ngaySua("")
+                .nguoiSua("")
+                .hoatDong(1)
+                .build();
+        Integer idSPNew = sanPhamRepository.findIdBySanPham(spNew);
+        if (idSPNew == data.getIdSanPham()) {
+            //1
+            //kiem tra ctsp moi
+            com.core.entity.ChiTietSanPham ctspMoi = com.core.entity.ChiTietSanPham.builder()
+                    .idSanPham(idSPNew)
+                    .tenSanPhamChiTiet(readForm().getTenSanPhamChiTiet())
+                    .idRam(readForm().getIdRam())
+                    .idBoNho(readForm().getIdBoNho())
+                    .idMauSac(readForm().getIdMauSac())
+                    .giaBan(readForm().getGiaBan())
+                    .ngayTao("")
+                    .nguoiTao("")
+                    .ngaySua("")
+                    .nguoiSua("")
+                    .hoatDong(1)
+                    .yeuThich(1)
+                    .build();
+            //lay idctsp 
+            Integer idCTSPMoi = chiTietSanPhamRepository.findIdBySanPham(ctspMoi);
+            if (idCTSPMoi == null) {
+                //chua co ctsp moi
+                //create ctsp moi
+                boolean createCTSP = chiTietSanPhamRepository.create(ctspMoi, account.getUsername());
+                //lay idCTSPmoi
+                idCTSPMoi = chiTietSanPhamRepository.findIdBySanPham(ctspMoi);
+                //update idCTSP moi cho imei
+                boolean updateImei = imeiRepository.updateImei(data.getIdChiTietSanPham(), idCTSPMoi);
+                init(idCTSPMoi);
+                showSuccess("Update thành công!");
+            } else {
+                if(idCTSPMoi == data.getIdChiTietSanPham() ){
+                    showWarring("Chưa thay đổi thông tin nào");
+                } else {
+                   //update idCTSP moi cho imei
+                   boolean updateImei = imeiRepository.updateImei(data.getIdChiTietSanPham(), idCTSPMoi);
+                   init(idCTSPMoi);
+                    showSuccess("Update sản phẩm thành công!");
+                }
+            }
 
-        // 0=yes, 1=no, 2=cancel
-        if (input == 0) {
-            //Thuc hien xoa mem
-        } else if (input == 1) {
-            fillForm(data);
         } else {
+            if (idSPNew == null) {
+                //4
+                //create sp moi - create ctsp moi - update imei sang ctsp moi
+                //create sp mo
+                boolean createSP = sanPhamRepository.create(spNew, account.getUsername());
+                // lay id sp moi
+                idSPNew = sanPhamRepository.findIdBySanPham(spNew);
+                // create ctsp moi 
+                com.core.entity.ChiTietSanPham ctspMoi = com.core.entity.ChiTietSanPham.builder()
+                        .idSanPham(idSPNew)
+                        .tenSanPhamChiTiet(readForm().getTenSanPhamChiTiet())
+                        .idRam(readForm().getIdRam())
+                        .idBoNho(readForm().getIdBoNho())
+                        .idMauSac(readForm().getIdMauSac())
+                        .giaBan(readForm().getGiaBan())
+                        .ngayTao("")
+                        .nguoiTao("")
+                        .ngaySua("")
+                        .nguoiSua("")
+                        .hoatDong(1)
+                        .yeuThich(1)
+                        .build();
+                boolean createCTSP = chiTietSanPhamRepository.create(ctspMoi, account.getUsername());
+                //lay id ctsp moi
+                int idCTSPMoi = chiTietSanPhamRepository.findIdBySanPham(ctspMoi);
+                //update idctsm moi cho imei
+                boolean updateImei = imeiRepository.updateImei(data.getIdChiTietSanPham(), idCTSPMoi);
+                init(idCTSPMoi);
+                showSuccess("Update sản phẩm thành công!");
+            } else {
+                //3
+                //Lay duoc id san pham moi
+                //Kiem tra xem da co ctsp moi chuwa
+                com.core.entity.ChiTietSanPham ctspMoi = com.core.entity.ChiTietSanPham.builder()
+                        .idSanPham(idSPNew)
+                        .tenSanPhamChiTiet(readForm().getTenSanPhamChiTiet())
+                        .idRam(readForm().getIdRam())
+                        .idBoNho(readForm().getIdBoNho())
+                        .idMauSac(readForm().getIdMauSac())
+                        .giaBan(readForm().getGiaBan())
+                        .ngayTao("")
+                        .nguoiTao("")
+                        .ngaySua("")
+                        .nguoiSua("")
+                        .hoatDong(1)
+                        .yeuThich(1)
+                        .build();
 
+                Integer idCTSPMoi = chiTietSanPhamRepository.findIdBySanPham(ctspMoi);
+
+                if (idCTSPMoi == null) {
+                    //chua co ctsp moi
+                    //create ctsp moi
+                    boolean createCTSPMoi = chiTietSanPhamRepository.create(ctspMoi, account.getUsername());
+                    //lay idctsp moi;
+                    idCTSPMoi = chiTietSanPhamRepository.findIdBySanPham(ctspMoi);
+                    //update idctsp moi cho imei
+                    boolean updateImei = imeiRepository.updateImei(data.getIdChiTietSanPham(), idCTSPMoi);
+                    init(idCTSPMoi);
+                    showSuccess("Update thành công!");
+                } else {
+                    //co idctsm moi roi 
+                    //update idctsp moi cho imei
+                    boolean updateImei = imeiRepository.updateImei(data.getIdChiTietSanPham(), idCTSPMoi);
+                    init(idCTSPMoi);
+                    showSuccess("Update thành công!");
+                }
+            }
         }
     }//GEN-LAST:event_btnSuaActionPerformed
 
@@ -556,7 +743,7 @@ public class ChiTietSanPham extends javax.swing.JPanel {
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         // TODO add your handling code here:
         int input = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn không?", "Xóa sản phẩm",
-                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
+                JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
         // 0=yes, 1=no, 2=cancel
         if (input == 0) {
             //Thuc hien xoa mem
@@ -602,7 +789,7 @@ public class ChiTietSanPham extends javax.swing.JPanel {
     private void btnXoaImeiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaImeiActionPerformed
         // TODO add your handling code here:
         int input = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn không?", "Xóa imei",
-                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
+                JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
         // 0=yes, 1=no, 2=cancel
         if (input == 0) {
             KetQua ketQua = imeiService.delete(txtDetailImei.getText());
@@ -622,10 +809,20 @@ public class ChiTietSanPham extends javax.swing.JPanel {
     private void btnSuaImeiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaImeiActionPerformed
         // TODO add your handling code here:
         int input = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn không?", "Sửa imei",
-                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
+                JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
         // 0=yes, 1=no, 2=cancel
         if (input == 0) {
-
+            if (txtDetailImei.getText().isEmpty()) {
+                showWarring("Chưa nhập imei");
+            } else {
+                KetQua kq = imeiService.update(Integer.valueOf(txtIdImei.getText()), txtDetailImei.getText());
+                if (kq.getIdKetQua() == 1) {
+                    showSuccess("Update imei thành công");
+                    init(idChiTietSanPham);
+                } else {
+                    showWarring("Update imei thất bại");
+                }
+            }
         }
     }//GEN-LAST:event_btnSuaImeiActionPerformed
 

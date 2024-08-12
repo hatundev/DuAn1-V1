@@ -6,13 +6,14 @@ package com.phone.view.form.sanpham;
 
 import com.core.entity.KetQua;
 import com.core.model.request.ThemSanPhamRequest;
+import com.core.model.response.TaiKhoanResponse;
 import com.core.model.response.ThuocTinhResponse;
 import com.core.service.SanPhamService;
 import com.core.service.impl.ThuocTinhServiceImpl;
 import com.phone.custom.component.Notification;
 import com.phone.swing.Combobox;
-import java.awt.Panel;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -25,7 +26,7 @@ public class FormThemSanPham extends javax.swing.JFrame {
     private Notification notiSuccess;
     private Notification notiWarring;
     private FormSanPham parentForm;
-    private String account;
+    private TaiKhoanResponse account;
 
     /**
      * Creates new form FormThemSanPham
@@ -33,7 +34,7 @@ public class FormThemSanPham extends javax.swing.JFrame {
     public FormThemSanPham() {
         initComponents();
     }
-    
+
     public FormThemSanPham(FormSanPham parentForm) {
         this.parentForm = parentForm;
         initComponents();
@@ -42,17 +43,22 @@ public class FormThemSanPham extends javax.swing.JFrame {
         reset();
     }
 
+    public void setAccount(TaiKhoanResponse tk) {
+        this.account = tk;
+    }
+
     public void init() {
-        fillDataToCombobox(cbChip, service.findAll("Chip"));
-        fillDataToCombobox(cbHeDieuHanh, service.findAll("HeDieuHanh"));
-        fillDataToCombobox(cbCameraSau, service.findAll("CameraSau"));
-        fillDataToCombobox(cbCameraTruoc, service.findAll("CameraTruoc"));
-        fillDataToCombobox(cbPin, service.findAll("Pin"));
-        fillDataToCombobox(cbHang, service.findAll("Hang"));
-        fillDataToCombobox(cbManHinh, service.findAll("ManHinh"));
-        fillDataToCombobox(cbRam, service.findAll("Ram"));
-        fillDataToCombobox(cbBoNho, service.findAll("BoNho"));
-        fillDataToCombobox(cbMauSac, service.findAll("MauSac"));
+
+        fillDataToCombobox(cbChip, service.findAllHD("Chip"));
+        fillDataToCombobox(cbHeDieuHanh, service.findAllHD("HeDieuHanh"));
+        fillDataToCombobox(cbCameraSau, service.findAllHD("CameraSau"));
+        fillDataToCombobox(cbCameraTruoc, service.findAllHD("CameraTruoc"));
+        fillDataToCombobox(cbPin, service.findAllHD("Pin"));
+        fillDataToCombobox(cbHang, service.findAllHD("Hang"));
+        fillDataToCombobox(cbManHinh, service.findAllHD("ManHinh"));
+        fillDataToCombobox(cbRam, service.findAllHD("Ram"));
+        fillDataToCombobox(cbBoNho, service.findAllHD("BoNho"));
+        fillDataToCombobox(cbMauSac, service.findAllHD("MauSac"));
         resetComboBox(cbChip);
         resetComboBox(cbHeDieuHanh);
         resetComboBox(cbCameraSau);
@@ -65,14 +71,16 @@ public class FormThemSanPham extends javax.swing.JFrame {
         resetComboBox(cbMauSac);
     }
     
-    public void resetComboBox(Combobox combo){
+    
+
+    public void resetComboBox(Combobox combo) {
         combo.setSelectedIndex(-1);
     }
 
     private void openThemNhanh(String name, String tenBang) {
         FormThemNhanh formThemNhanh = new FormThemNhanh(this);
         formThemNhanh.handleEvent(name, tenBang);
-        
+
         formThemNhanh.setVisible(true);
     }
 
@@ -134,7 +142,7 @@ public class FormThemSanPham extends javax.swing.JFrame {
                 txtGiaBan.requestFocus();
                 return null;
             }
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             notiWarring = new Notification(this, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Giá phải là số");
             notiWarring.showNotification();
             txtGiaBan.requestFocus();
@@ -145,20 +153,35 @@ public class FormThemSanPham extends javax.swing.JFrame {
                 + " " + String.valueOf(cbBoNho.getSelectedItem())
                 + " " + String.valueOf(cbMauSac.getSelectedItem());
 
+        Integer idChip = findIdByName(String.valueOf(cbChip.getSelectedItem()), service.findAllHD("Chip"));
+        Integer idHeDieuHanh = findIdByName(String.valueOf(cbHeDieuHanh.getSelectedItem()), service.findAllHD("HeDieuHanh"));
+        Integer idCamSau = findIdByName(String.valueOf(cbCameraSau.getSelectedItem()), service.findAllHD("CameraSau"));
+        Integer idCamTruoc = findIdByName(String.valueOf(cbCameraTruoc.getSelectedItem()), service.findAllHD("CameraTruoc"));
+        Integer idPin = findIdByName(String.valueOf(cbPin.getSelectedItem()), service.findAllHD("Pin"));
+        Integer idHang = findIdByName(String.valueOf(cbHang.getSelectedItem()), service.findAllHD("Hang"));
+        Integer idManHinh = findIdByName(String.valueOf(cbManHinh.getSelectedItem()), service.findAllHD("ManHinh"));
+        Integer idRam = findIdByName(String.valueOf(cbRam.getSelectedItem()), service.findAllHD("Ram"));
+        Integer idBoNho = findIdByName(String.valueOf(cbBoNho.getSelectedItem()), service.findAllHD("BoNho"));
+        Integer idMauSac = findIdByName(String.valueOf(cbMauSac.getSelectedItem()), service.findAllHD("MauSac"));
+        if(idChip == null || idHeDieuHanh == null || idCamSau == null ||
+               idCamTruoc == null || idPin == null || idHang== null ||
+                idManHinh == null || idRam == null || idMauSac == null || idBoNho == null){
+            JOptionPane.showMessageDialog(this,"Các thuộc tính không chọn sẽ được để mặc định là chưa nhâp", "Thông báo", 2);
+        }
         ThemSanPhamRequest themSanPhamRequest = new ThemSanPhamRequest(
                 name,
                 fullName,
                 price,
-                findIdByName(String.valueOf(cbChip.getSelectedItem()), service.findAll("Chip")),
-                findIdByName(String.valueOf(cbHeDieuHanh.getSelectedItem()), service.findAll("HeDieuHanh")),
-                findIdByName(String.valueOf(cbCameraSau.getSelectedItem()), service.findAll("CameraSau")),
-                findIdByName(String.valueOf(cbCameraTruoc.getSelectedItem()), service.findAll("CameraTruoc")),
-                findIdByName(String.valueOf(cbPin.getSelectedItem()), service.findAll("Pin")),
-                findIdByName(String.valueOf(cbHang.getSelectedItem()), service.findAll("Hang")),
-                findIdByName(String.valueOf(cbMauSac.getSelectedItem()), service.findAll("MauSac")),
-                findIdByName(String.valueOf(cbRam.getSelectedItem()), service.findAll("Ram")),
-                findIdByName(String.valueOf(cbBoNho.getSelectedItem()), service.findAll("BoNho")),
-                findIdByName(String.valueOf(cbMauSac.getSelectedItem()), service.findAll("MauSac")));
+                idChip == null ? 0 : idChip,
+                idHeDieuHanh == null ? 0 : idHeDieuHanh,
+                idCamSau == null ? 0 : idCamSau,
+                idCamTruoc == null ? 0 : idCamTruoc,
+                idPin == null ? 0 : idPin,
+                idHang == null ? 0 : idHang,
+                idManHinh == null ? 0 : idManHinh,
+                idRam == null ? 0 : idRam,
+                idBoNho == null ? 0 : idBoNho,
+                idMauSac == null ? 0 : idMauSac);
         return themSanPhamRequest;
     }
 
@@ -447,22 +470,22 @@ public class FormThemSanPham extends javax.swing.JFrame {
 
     private void btnThemChipMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemChipMouseClicked
         // TODO add your handling code here:
-        openThemNhanh("chip","Chip");
+        openThemNhanh("chip", "Chip");
     }//GEN-LAST:event_btnThemChipMouseClicked
 
     private void btnThemHeDieuHanhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemHeDieuHanhMouseClicked
         // TODO add your handling code here:
-        openThemNhanh("hệ điều hành","HeDieuHanh");
+        openThemNhanh("hệ điều hành", "HeDieuHanh");
     }//GEN-LAST:event_btnThemHeDieuHanhMouseClicked
 
     private void btnThemCameraSauMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemCameraSauMouseClicked
         // TODO add your handling code here:
-        openThemNhanh("camera sau","CameraSau");
+        openThemNhanh("camera sau", "CameraSau");
     }//GEN-LAST:event_btnThemCameraSauMouseClicked
 
     private void btnCameraTruocMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCameraTruocMouseClicked
         // TODO add your handling code here:
-        openThemNhanh("camera trước","CameraTruoc");
+        openThemNhanh("camera trước", "CameraTruoc");
     }//GEN-LAST:event_btnCameraTruocMouseClicked
 
     private void btnThemPinMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemPinMouseClicked
@@ -508,14 +531,14 @@ public class FormThemSanPham extends javax.swing.JFrame {
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
         if (readForm() != null) {
-            KetQua ketQua = sanPhamService.create(readForm());
+            KetQua ketQua = sanPhamService.create(readForm(), account.getUsername());
             if (ketQua.getIdKetQua() == 0) {
                 notiWarring = new Notification(this, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, ketQua.getThongBao());
                 notiWarring.showNotification();
             } else {
                 notiSuccess = new Notification(this, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, ketQua.getThongBao());
                 notiSuccess.showNotification();
-                
+
                 if (parentForm != null) {
                     parentForm.init();
                 }

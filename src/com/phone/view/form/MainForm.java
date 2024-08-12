@@ -16,6 +16,7 @@ public class MainForm extends javax.swing.JPanel {
     }
 
     public void showForm(Component form) {
+        
         removeAll();
         add(form);
         repaint();

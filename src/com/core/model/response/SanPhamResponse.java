@@ -4,6 +4,7 @@
  */
 package com.core.model.response;
 
+import com.util.Util;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,7 +23,8 @@ import lombok.ToString;
 @Builder
 @ToString
 public class SanPhamResponse {
-
+    private Util util = new Util();
+    
     private Integer stt;
     
     private Integer id;
@@ -43,7 +45,7 @@ public class SanPhamResponse {
 
     public Object[] toRowTable() {
         return new Object[]{
-            stt, tenSanPham, hang, ram, boNho, mauSac, soLuong, gia
+            stt, tenSanPham, hang, ram, boNho, mauSac, soLuong, util.convertFloatToMoney(gia)
         };
     }
 

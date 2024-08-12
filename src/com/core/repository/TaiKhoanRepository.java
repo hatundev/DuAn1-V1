@@ -55,7 +55,9 @@ public class TaiKhoanRepository {
                      	ma_nhan_vien,
                      	mat_khau,
                      	ten_nhan_vien,
-                     	chuc_vu
+                     	chuc_vu,
+                        so_dien_thoai,
+                        mat_khau
                      FROM
                      	NhanVien nv
                      WHERE
@@ -74,6 +76,8 @@ public class TaiKhoanRepository {
                 tk.setPassword(rs.getString("mat_khau"));
                 tk.setTenNhanVien(rs.getString("ten_nhan_vien"));
                 tk.setTenChucVu(rs.getInt("chuc_vu") == 1 ? "Quản lý" : "Nhân viên");
+                tk.setSDT(rs.getString("so_dien_thoai"));
+                tk.setMatKhau(rs.getString("mat_khau"));
                 return tk;
             }
             return null;

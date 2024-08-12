@@ -18,6 +18,9 @@ public class ImeiService {
 
     private ImeiRepository imeiRepository = new ImeiRepository();
 
+    public KetQua checkImei(String ma, int id){
+        return imeiRepository.checkImei(ma, id);
+    }
     public List<Imei> findByIdCTSP(int id) {
         return imeiRepository.findByIdCTSP(id);
     }
@@ -35,6 +38,10 @@ public class ImeiService {
     }
     
     public KetQua delete(String id){
-        return imeiRepository.delete(id);
+        return imeiRepository.lock(id);
+    }
+    
+    public KetQua unLock(String id){
+        return imeiRepository.unLock(id);
     }
 }

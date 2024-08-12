@@ -9,6 +9,7 @@ import com.core.entity.KetQua;
 import com.core.entity.SanPham;
 import com.core.model.request.ChiTietSanPhamRequest;
 import com.core.model.request.ThemSanPhamRequest;
+import com.core.model.request.TimKiemRequest;
 import com.core.model.response.ChiTietSanPhamResponse;
 import com.core.model.response.SanPhamResponse;
 import com.core.repository.ChiTietSanPhamRepository;
@@ -24,9 +25,15 @@ public class SanPhamService {
     private SanPhamRepository sanPhamRepository = new SanPhamRepository();
     private ChiTietSanPhamRepository chiTietSanPhamRepository = new ChiTietSanPhamRepository();
     
-    public List<SanPhamResponse> getDataToTable(int page){
-        return sanPhamRepository.findByPage(page);
+    public List<SanPhamResponse> getDataToTable(){
+        return sanPhamRepository.findByPage();
     }
+    
+    public List<SanPhamResponse> getDataToTable(TimKiemRequest request){
+        return sanPhamRepository.findByPage(request);
+    }
+    
+    
     
     public Integer getSize(){
         return sanPhamRepository.getSize();
@@ -129,11 +136,11 @@ public class SanPhamService {
 //            return new KetQua(0,"Sản phẩm đã tồn tại");
 //        }
 //    }
-    public KetQua create(ThemSanPhamRequest data) {
+    public KetQua create(ThemSanPhamRequest data, String username) {
         
         SanPham sp = convertRequestToSanPham(data);
         if (sanPhamRepository.findIdBySanPham(sp) == null) {
-            boolean resultAddSanPham = sanPhamRepository.create(sp);
+            boolean resultAddSanPham = sanPhamRepository.create(sp, username);
         }
         
         int idSanPham = sanPhamRepository.findIdBySanPham(sp);
@@ -141,7 +148,7 @@ public class SanPhamService {
         ChiTietSanPham ctsp = convertRequestToCTSP(data, idSanPham);
         
         if (chiTietSanPhamRepository.findIdBySanPham(ctsp) == null) {
-            boolean resultAddChiTietSanPham = chiTietSanPhamRepository.create(ctsp);
+            boolean resultAddChiTietSanPham = chiTietSanPhamRepository.create(ctsp, username);
             if (resultAddChiTietSanPham) {
                 return new KetQua(1 , "Thêm sản phẩm thành công");
             } else {

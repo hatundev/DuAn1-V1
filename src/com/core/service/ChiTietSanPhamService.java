@@ -8,6 +8,7 @@ import com.core.entity.KetQua;
 import com.core.entity.SanPham;
 import com.core.model.response.ChiTietSanPhamResponse;
 import com.core.repository.ChiTietSanPhamRepository;
+import java.util.List;
 
 /**
  *
@@ -17,6 +18,10 @@ public class ChiTietSanPhamService {
 
     private ChiTietSanPhamRepository repo = new ChiTietSanPhamRepository();
 
+    public List<ChiTietSanPhamResponse> findAll(){
+        return repo.findAll();
+    }
+    
     public KetQua delete(int id) {
         if (repo.delete(id)) {
             return new KetQua(1, "Xóa thành công");
@@ -25,22 +30,22 @@ public class ChiTietSanPhamService {
         }
     }
     
-    public KetQua update(ChiTietSanPhamResponse data) {
-        SanPham sp = SanPham.builder()
-                .tenSanPham(data.getTenSanPham())
-                .idChip(data.getIdChip())
-                .idCameraSau(data.getIdCameraSau())
-                .idCameraTruoc(data.getIdCameraTruoc())
-                .idHang(data.getIdHang())
-                .idHeDieuHanh(data.getIdHeDieuHanh())
-                .idManHinh(data.getIdManHinh())
-                .idPin(data.getIdPin())
-                .ngayTao("")
-                .nguoiTao("")
-                .ngaySua("")
-                .nguoiSua("")
-                .hoatDong(1)
-                .build();
-    }
+//    public KetQua update(ChiTietSanPhamResponse data) {
+//        SanPham sp = SanPham.builder()
+//                .tenSanPham(data.getTenSanPham())
+//                .idChip(data.getIdChip())
+//                .idCameraSau(data.getIdCameraSau())
+//                .idCameraTruoc(data.getIdCameraTruoc())
+//                .idHang(data.getIdHang())
+//                .idHeDieuHanh(data.getIdHeDieuHanh())
+//                .idManHinh(data.getIdManHinh())
+//                .idPin(data.getIdPin())
+//                .ngayTao("")
+//                .nguoiTao("")
+//                .ngaySua("")
+//                .nguoiSua("")
+//                .hoatDong(1)
+//                .build();
+//    }
 
 }

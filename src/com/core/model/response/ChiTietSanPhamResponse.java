@@ -4,6 +4,7 @@
  */
 package com.core.model.response;
 
+import com.util.Util;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,49 +23,51 @@ import lombok.ToString;
 @Builder
 @ToString
 public class ChiTietSanPhamResponse {
-
+    
+    private int stt;
+    
     private Integer idChiTietSanPham;
-
+    
     private Integer idSanPham;
-
+    
     private String tenSanPham;
-
+    
     private String tenSanPhamChiTiet;
-
+    
     private String tenHeDieuHanh;
-
+    
     private String tenHang;
-
+    
     private String tenManHinh;
-
+    
     private String tenCameraTruoc;
-
+    
     private String tenCameraSau;
-
+    
     private String tenChip;
-
+    
     private String tenPin;
-
+    
     private String tenRam;
-
+    
     private String tenBoNho;
-
+    
     private String tenMauSac;
     
     private Integer soLuong;
-
+    
     private Float giaBan;
-
+    
     private String ngayTao;
-
+    
     private String ngaySua;
-
+    
     private String nguoiTao;
-
+    
     private String nguoiSua;
-
+    
     private Integer yeuThich;
-
+    
     private Integer hoatDong;
-
+    
 }

@@ -1,6 +1,7 @@
 package com.phone.view.main;
 
 import com.core.model.response.TaiKhoanResponse;
+import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import com.phone.custom.component.Header;
 import com.phone.custom.component.Menu;
 import com.phone.custom.component.Notification;
@@ -10,7 +11,6 @@ import com.phone.custom.swing.MenuItem;
 import com.phone.custom.swing.PopupMenu;
 import com.phone.view.form.MainForm;
 import com.phone.view.form.khachhang.FormKhachHang;
-import com.phone.view.form.voucher.FormVoucher;
 import java.awt.Component;
 
 import net.miginfocom.swing.MigLayout;
@@ -23,10 +23,16 @@ import com.phone.view.form.hoadon.FormHoaDon;
 import com.phone.view.form.sanpham.ChiTietSanPham;
 import com.phone.view.form.sanpham.FormSanPham;
 import com.phone.view.form.thuoctinh.FormThuocTinh;
+import com.phone.view.form.tongquan.DoiMatKhau;
 import com.phone.view.form.tongquan.FormHome;
-import java.awt.Frame;
-import java.awt.Panel;
+import com.phone.view.form.tongquan.FormQuanLyNhanVien;
+import com.phone.view.form.voucher.FormVoucher;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 public class Main extends javax.swing.JFrame {
 
@@ -42,9 +48,18 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
         init();
+        SwingUtilities.invokeLater(() -> {
+            try {
+                UIManager.setLookAndFeel(new FlatMacLightLaf());
+                SwingUtilities.updateComponentTreeUI(this);
+//                FlatLightLaf.install();
+            } catch (UnsupportedLookAndFeelException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
     }
-    
-    public void showByRole(){
+
+    public void showByRole() {
         if (account.getTenChucVu().equals("Quản lý")) {
             main.showForm(new FormHome());
         } else {
@@ -54,7 +69,7 @@ public class Main extends javax.swing.JFrame {
         }
     }
 
-    private void close() {
+    public void close() {
         this.dispose();
     }
 
@@ -83,64 +98,54 @@ public class Main extends javax.swing.JFrame {
             public void menuSelected(int menuIndex, int subMenuIndex) {
                 if (menuIndex == 0) {
                     if (lbRole.getText().equals("Quản lý")) {
+                        lbView.setText("Thống kê");
                         main.showForm(new FormHome());
                         if (subMenuIndex == 0) {
+                            lbView.setText("Thống kê");
                             main.showForm(new FormHome());
                         } else if (subMenuIndex == 1) {
-                            main.showForm(new FormHome());
+                            lbView.setText("Quản lý nhân viên");
+                            FormQuanLyNhanVien formQuanLyNhanVien = new FormQuanLyNhanVien();
+                            formQuanLyNhanVien.setAccount(account);
+                            main.showForm(formQuanLyNhanVien);
                         }
                     } else {
                         JOptionPane.showMessageDialog(rootPane, "Bạn không có quyền xem phần này");
                         FormBanHang formBanHang = new FormBanHang();
                         formBanHang.setAccount(account);
+                        lbView.setText("Bán hàng");
                         main.showForm(formBanHang);
                     }
                 } else if (menuIndex == 1) {
                     FormBanHang formBanHang = new FormBanHang();
                     formBanHang.setAccount(account);
+                    lbView.setText("Bán hàng");
                     main.showForm(formBanHang);
                 } else if (menuIndex == 2) {
+                    lbView.setText("Quản lý hóa đơn");
                     main.showForm(new FormHoaDon());
-                    if (subMenuIndex == 0) {
-                        main.showForm(new FormHoaDon());
-                    } else if (subMenuIndex == 1) {
-                        main.showForm(new FormHoaDon());
-                    }
                 } else if (menuIndex == 3) {
                     lbView.setText("Quản lý sản phẩm");
-                    main.showForm(new FormSanPham());
-                    if (subMenuIndex == 0) {
-                        lbView.setText("Quản lý sản phẩm");
-                        main.showForm(new FormSanPham());
-                    } else if (subMenuIndex == 1) {
-                        lbView.setText("Chi tiết sản phẩm");
-                        main.showForm(new ChiTietSanPham());
-                    }
+                    FormSanPham formSanPham = new FormSanPham();
+                    formSanPham.setAccount(account);
+                    main.showForm(formSanPham);
                 } else if (menuIndex == 4) {
+                    lbView.setText("Quản lý thuộc tính");
                     main.showForm(new FormThuocTinh());
-                    if (subMenuIndex == 0) {
-                        main.showForm(new FormThuocTinh());
-                    } else if (subMenuIndex == 1) {
-                        main.showForm(new FormThuocTinh());
-                    }
                 } else if (menuIndex == 5) {
+                    lbView.setText("Quản lý khách hàng");
                     main.showForm(new FormKhachHang());
-                    if (subMenuIndex == 0) {
-                        main.showForm(new FormKhachHang());
-                    } else if (subMenuIndex == 1) {
-                        main.showForm(new FormKhachHang());
-                    }
                 } else if (menuIndex == 6) {
-
-                    Test test = new Test();
-                    test.setVisible(true);
-                    close();
-//                    main.showForm(new FormVoucher());
-//                    if (subMenuIndex == 0) {
-//                        main.showForm(new FormVoucher());
-//                    } else if (subMenuIndex == 1) {
-//                        main.showForm(new FormVoucher());
-//                    }
+                    if (lbRole.getText().equals("Quản lý")) {
+                        lbView.setText("Quản lý phiếu giảm giá");
+                        main.showForm(new FormVoucher());
+                    } else {
+                        JOptionPane.showMessageDialog(rootPane, "Bạn không có quyền xem phần này");
+                        FormBanHang formBanHang = new FormBanHang();
+                        formBanHang.setAccount(account);
+                        lbView.setText("Bán hàng");
+                        main.showForm(formBanHang);
+                    }
                 }
             }
         });
@@ -189,12 +194,15 @@ public class Main extends javax.swing.JFrame {
         } else {
             FormBanHang formBanHang = new FormBanHang();
             formBanHang.setAccount(account);
+            lbView.setText("Bán hàng");
             main.showForm(formBanHang);
         }
     }
 
     public void viewDetailProduct(int id) {
-        main.showForm(new ChiTietSanPham(id));
+        ChiTietSanPham chiTietSanPham = new ChiTietSanPham(id);
+        chiTietSanPham.setAccount(account);
+        main.showForm(chiTietSanPham);
     }
 
     public void showNotiWarring(String message) {
@@ -221,14 +229,16 @@ public class Main extends javax.swing.JFrame {
         jSeparator3 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
         lbView = new javax.swing.JLabel();
+        jSeparator4 = new javax.swing.JSeparator();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Phần mềm bán điện thoại - DuAn1_Nhom5");
         setUndecorated(true);
 
-        bg.setBackground(new java.awt.Color(246, 237, 237));
+        bg.setBackground(new java.awt.Color(221, 224, 227));
 
-        panelHeader.setBackground(new java.awt.Color(204, 204, 255));
+        panelHeader.setBackground(new java.awt.Color(147, 158, 168));
 
         lbUserName.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         lbUserName.setForeground(new java.awt.Color(51, 51, 51));
@@ -257,23 +267,36 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        lbView.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
+        lbView.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lbView.setText("Form .....");
+
+        jSeparator4.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/phone/resources/icons/key.png"))); // NOI18N
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelHeaderLayout = new javax.swing.GroupLayout(panelHeader);
         panelHeader.setLayout(panelHeaderLayout);
         panelHeaderLayout.setHorizontalGroup(
             panelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelHeaderLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(17, 17, 17)
                 .addComponent(lbView)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1383, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1277, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
                 .addGroup(panelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbUserName, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lbRole, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(10, 10, 10)
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(btnLogOut)
@@ -285,9 +308,18 @@ public class Main extends javax.swing.JFrame {
         );
         panelHeaderLayout.setVerticalGroup(
             panelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelHeaderLayout.createSequentialGroup()
-                .addGroup(panelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelHeaderLayout.createSequentialGroup()
+                .addGroup(panelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panelHeaderLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(lbView))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelHeaderLayout.createSequentialGroup()
+                        .addGap(13, 13, 13)
+                        .addGroup(panelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnLogOut)
+                            .addComponent(jLabel2))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelHeaderLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(panelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jSeparator2)
@@ -296,14 +328,9 @@ public class Main extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(lbRole))
                             .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING)))
-                    .addGroup(panelHeaderLayout.createSequentialGroup()
-                        .addGap(13, 13, 13)
-                        .addGroup(panelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnLogOut)
-                            .addComponent(jLabel2)
-                            .addComponent(lbView))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jSeparator4, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
 
@@ -347,6 +374,13 @@ public class Main extends javax.swing.JFrame {
         login.setVisible(true);
     }//GEN-LAST:event_btnLogOutMouseClicked
 
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        // TODO add your handling code here:
+        DoiMatKhau form = new DoiMatKhau(this);
+        form.setAccount(account);
+        form.setVisible(true);
+    }//GEN-LAST:event_jLabel1MouseClicked
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -387,10 +421,12 @@ public class Main extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bg;
     private javax.swing.JLabel btnLogOut;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
     private javax.swing.JLabel lbRole;
     private javax.swing.JLabel lbUserName;
     private javax.swing.JLabel lbView;

@@ -10,12 +10,44 @@ import com.core.tool.DBConnect;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author hatun
  */
 public class ChiTietSanPhamRepository {
+
+    public List<ChiTietSanPhamResponse> findAll() {
+        String sql = """
+                    SELECT 
+                        ROW_NUMBER() OVER (ORDER BY ctsp.id DESC) AS 'stt',
+                        ctsp.id as 'id',
+                        ctsp.ten_san_pham_chi_tiet AS 'ten_san_pham_chi_tiet',
+                        (SELECT COUNT(*) FROM Imei i WHERE i.id_chi_tiet_san_pham = ctsp.id and i.hoat_dong= 1) AS 'so_luong',
+                        ctsp.gia_ban AS 'gia_ban'
+                    FROM ChiTietSanPham ctsp JOIN SanPham sp ON sp.id=ctsp.id_san_pham
+                    WHERE ctsp.hoat_dong = 1 and sp.hoat_dong=1
+                    """;
+        try (Connection conn = DBConnect.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            List<ChiTietSanPhamResponse> list = new ArrayList<>();
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                ChiTietSanPhamResponse sp = ChiTietSanPhamResponse.builder()
+                        .stt(rs.getInt("stt"))
+                        .idChiTietSanPham(rs.getInt("id"))
+                        .tenSanPhamChiTiet(rs.getString("ten_san_pham_chi_tiet"))
+                        .soLuong(rs.getInt("so_luong"))
+                        .giaBan(rs.getFloat("gia_ban"))
+                        .build();
+                list.add(sp);
+            }
+            return list;
+        } catch (Exception e) {
+        }
+        return null;
+    }
 
     public Integer findIdBySanPham(ChiTietSanPham ctsp) {
         String sql = """
@@ -131,17 +163,17 @@ public class ChiTietSanPhamRepository {
                         .build();
             }
         } catch (Exception e) {
-           return null;
+            return null;
         }
-        return null; 
+        return null;
     }
-    
+
     public static void main(String[] args) {
         ChiTietSanPhamRepository ctspr = new ChiTietSanPhamRepository();
         System.out.println(ctspr.findByID(2).toString());
     }
 
-    public boolean create(ChiTietSanPham ctsp) {
+    public boolean create(ChiTietSanPham ctsp, String username) {
         String sql = """
                      INSERT INTO
                      	ChiTietSanPham (
@@ -165,8 +197,8 @@ public class ChiTietSanPhamRepository {
             ps.setInt(4, ctsp.getIdBoNho());
             ps.setInt(5, ctsp.getIdMauSac());
             ps.setFloat(6, ctsp.getGiaBan());
-            ps.setString(7, "null");
-            ps.setInt(8, 0);
+            ps.setString(7, username);
+            ps.setInt(8, 1);
             ps.setInt(9, 1);
             if (ps.executeUpdate() == 0) {
                 return false;
@@ -177,7 +209,34 @@ public class ChiTietSanPhamRepository {
             return false;
         }
     }
-    
+
+    public boolean update(ChiTietSanPham ctsp, int id) {
+        String sql = """
+                 UPDATE ChiTietSanPham
+                 SET ten_san_pham_chi_tiet = ?,
+                     id_ram = ?,
+                     id_bo_nho = ?,
+                     id_mau_sac = ?,
+                     gia_ban = ?
+                 WHERE id = ?
+                 """;
+        try (Connection conn = DBConnect.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, ctsp.getTenSanPhamChiTiet());
+            ps.setInt(2, ctsp.getIdRam());
+            ps.setInt(3, ctsp.getIdBoNho());
+            ps.setInt(4, ctsp.getIdMauSac());
+            ps.setFloat(5, ctsp.getGiaBan());
+            ps.setFloat(6, id);
+            if (ps.executeUpdate() == 0) {
+                return false;
+            } else {
+                return true;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     public boolean delete(int id) {
         String sql = """
                     UPDATE ChiTietSanPham

@@ -23,6 +23,8 @@ import lombok.ToString;
 @ToString
 public class ImeiResponse {
     
+    private int id;
+    
     private String ten;
     
     private String imei;

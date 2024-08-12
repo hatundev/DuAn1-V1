@@ -4,6 +4,9 @@
  */
 package com.core.entity;
 
+import com.core.model.response.HoaDonChiTietResponse;
+import com.core.repository.HoaDonChiTietRepository;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,5 +31,13 @@ public class BoNho {
     private String ten;
     
     private Integer hoatDong;
+    
+    public static void main(String[] args) {
+        HoaDonChiTietRepository repo = new HoaDonChiTietRepository();
+        List<HoaDonChiTietResponse> data = repo.getGioHang(8);
+        for (HoaDonChiTietResponse hoaDonChiTietResponse : data) {
+            System.out.println(hoaDonChiTietResponse.toString());
+        }
+    }
     
 }

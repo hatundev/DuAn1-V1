@@ -40,7 +40,7 @@ public class Menu extends PanelTransparent {
     public void addEventShowPopup(EventShowPopupMenu eventShowPopup) {
         this.eventShowPopup = eventShowPopup;
     }
-
+    
     private final MigLayout layout;
     private EventMenuSelected event;
     private EventShowPopupMenu eventShowPopup;
@@ -49,22 +49,23 @@ public class Menu extends PanelTransparent {
 
     public Menu() {
         initComponents();
-        setOpaque(false);
-        sp.getViewport().setOpaque(false);
+//        setOpaque(false);
+//        sp.getViewport().setOpaque(false);
+        setBackground(new Color(33,37,41));
         sp.setVerticalScrollBar(new ScrollBarCustom());
         layout = new MigLayout("wrap, fillx, insets 0", "[fill]", "[]0[]");
         panel.setLayout(layout);
-        setTransparent(0.5f);
+        //setTransparent(0.5f);
     }
 
     public void initMenuItem() {
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/phone/resources/icons/1.png")), "Tổng quan", "Thống kê", "Quản lý nhân viên"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/phone/resources/icons/2.png")), "Bán hàng", "Lên đơn hàng"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/phone/resources/icons/3.png")), "Hóa đơn", "Danh sách hóa đơn", "Hóa đơn chi tiết"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/phone/resources/icons/4.png")), "Sản phẩm", "Quản lý sản phẩm", "Chi tiết sản phẩm", "Quản lý thuộc tính"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/phone/resources/icons/5.png")), "Thuộc tính", "Danh sách thuộc tính", "Chi tiết thuộc tính"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/phone/resources/icons/6.png")), "Khách hàng", "Danh sách khách hàng", "Chi tiết khách hàng"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/phone/resources/icons/7.png")), "Khuyến mại", "Danh sách khuyến mại", "Chi tiết khuyến mại"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/phone/resources/icons/2.png")), "Bán hàng"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/phone/resources/icons/3.png")), "Hóa đơn"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/phone/resources/icons/4.png")), "Sản phẩm"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/phone/resources/icons/5.png")), "Thuộc tính"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/phone/resources/icons/6.png")), "Khách hàng"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/phone/resources/icons/7.png")), "Khuyến mại"));
     }
 
 //    private void addMenu(ModelMenu menu) {
@@ -107,9 +108,6 @@ public class Menu extends PanelTransparent {
 
         sp.setBorder(null);
         sp.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        sp.setViewportBorder(null);
-
-        panel.setOpaque(false);
 
         javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
         panel.setLayout(panelLayout);
@@ -124,6 +122,8 @@ public class Menu extends PanelTransparent {
 
         sp.setViewportView(panel);
 
+        profile1.setForeground(new java.awt.Color(255, 255, 255));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -136,15 +136,15 @@ public class Menu extends PanelTransparent {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(profile1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(sp, javax.swing.GroupLayout.DEFAULT_SIZE, 523, Short.MAX_VALUE))
+                .addComponent(sp))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        GradientPaint gra = new GradientPaint(0, 0, new Color(1,0,236), getWidth(), 0, new Color(251,54,244));
-                //GradientPaint gra = new GradientPaint(0, 0, new Color(33, 105, 249), getWidth(), 0, new Color(93, 58, 196));
+//        GradientPaint gra = new GradientPaint(0, 0, new Color(1,0,236), getWidth(), 0, new Color(251,54,244));
+                GradientPaint gra = new GradientPaint(0, 0, new Color(33,37,41), getWidth(), 0, new Color(33,37,41));
 
         g2.setPaint(gra);
         g2.fillRect(0, 0, getWidth(), getHeight());

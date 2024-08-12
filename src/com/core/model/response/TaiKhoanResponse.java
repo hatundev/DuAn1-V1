@@ -32,5 +32,9 @@ public class TaiKhoanResponse {
     private String tenNhanVien;
 
     private String tenChucVu;
+    
+    private String SDT;
+    
+    private String matKhau;
 
 }

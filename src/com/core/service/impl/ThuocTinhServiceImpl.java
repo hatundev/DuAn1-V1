@@ -23,6 +23,11 @@ public class ThuocTinhServiceImpl implements ThuocTinhService {
     public List<ThuocTinhResponse> findAll(String tenBang) {
         return repo.findAll(tenBang);
     }
+    
+    @Override
+    public List<ThuocTinhResponse> findAllHD(String tenBang) {
+        return repo.findAllHD(tenBang);
+    }
 
     @Override
     public ThuocTinhResponse findById(String tenBang, Integer id) {
@@ -43,5 +48,20 @@ public class ThuocTinhServiceImpl implements ThuocTinhService {
     public Boolean delete(String tenBang, Integer id) {
         return repo.delete(tenBang, id);
     }
+    
+    @Override
+    public KetQua create1(String tenBang, String data,Integer hoatDong) {
+         System.out.println("Tạo mới " + tenBang + ": " + data + ", Hoạt động: " + hoatDong);
+        return repo.create1(tenBang, data,hoatDong);
+    }
+    
+    @Override
+    public Boolean update1(String tenBang, Integer id, ThuocTinhResponse data, Integer hoatDong) {
+        return repo.update1(tenBang, id, data,hoatDong);
+    }
 
+    @Override
+    public List<ThuocTinhResponse> cboHoatDong(String tenBang) {
+        return repo.cboHoatDong(tenBang);
+    }
 }

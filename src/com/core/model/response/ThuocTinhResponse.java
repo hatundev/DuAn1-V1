@@ -23,10 +23,17 @@ import lombok.ToString;
 @ToString
 public class ThuocTinhResponse {
     
+    private Integer stt;
+    
     private Integer id;
     
     private String name;
     
     private Integer hoatDong;
     
+    public Object[] toRowTable() {
+        return new Object[]{
+             stt, name, hoatDong==1 ?"Đang hoạt động": "Không hoạt động"
+        };
+    }
 }

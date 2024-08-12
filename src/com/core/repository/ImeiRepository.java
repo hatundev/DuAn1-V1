@@ -96,7 +96,7 @@ public class ImeiRepository {
         return new KetQua(0, "Sửa thất bại!");
     }
 
-    public KetQua delete(String imei) {
+    public KetQua lock(String imei) {
         String sql = """
                     UPDATE Imei
                     SET hoat_dong = 0 
@@ -112,10 +112,47 @@ public class ImeiRepository {
         }
         return new KetQua(0, "Xóa thất bại!");
     }
+    
+    public KetQua unLock(String imei) {
+        String sql = """
+                    UPDATE Imei
+                    SET hoat_dong = 1 
+                    WHERE ma_imei = ?
+                     """;
+        try (Connection conn = DBConnect.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, imei);
+            if (ps.executeUpdate() != 0) {
+                return new KetQua(1, "Xóa imei thành công!");
+            }
+        } catch (Exception e) {
+
+        }
+        return new KetQua(0, "Xóa thất bại!");
+    }
+    
+    public KetQua checkImei(String imei, int id){
+        String sql = """
+                     SELECT *
+                     FROM Imei i
+                     WHERE
+                        ma_imei = ? and id_chi_tiet_san_pham = ? and hoat_dong = 1
+                     """;
+        try (Connection conn = DBConnect.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setString(1, imei);
+            ps.setInt(2, id);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                return new KetQua(1, "Thêm thành công");
+            }
+        } catch (Exception e) {
+        }
+        return new KetQua(0, "Loi");
+    }
 
     public ImeiResponse findByImei(String imei) {
         String sql = """
                      SELECT
+                        ctsp.id,
                      	ctsp.ten_san_pham_chi_tiet ,
                      	i.ma_imei ,
                      	ctsp.gia_ban 
@@ -130,7 +167,7 @@ public class ImeiRepository {
             ps.setString(1, imei);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                ImeiResponse data = new ImeiResponse(rs.getString("ten_san_pham_chi_tiet"), rs.getString("ma_imei"), rs.getFloat("gia_ban"));
+                ImeiResponse data = new ImeiResponse(rs.getInt("id"),rs.getString("ten_san_pham_chi_tiet"), rs.getString("ma_imei"), rs.getFloat("gia_ban"));
                 return data;
             }
         } catch (Exception e) {
@@ -138,6 +175,26 @@ public class ImeiRepository {
         }
         return null;
     }
+    
+    public boolean updateImei(int idctspcu,int idctspmoi){
+        String sql = """
+                     UPDATE Imei
+                     SET id_chi_tiet_san_pham = ?
+                     WHERE id_chi_tiet_san_pham = ? and hoat_dong = 1
+                     """;
+        try (Connection conn = DBConnect.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, idctspmoi);
+            ps.setInt(2, idctspcu);
+            if (ps.executeUpdate() != 0) {
+                return true;
+            }
+        } catch (Exception e) {
+
+        }
+        return false;
+    }
+    
+    
     
     public static void main(String[] args) {
         ImeiService imeiService = new ImeiService();

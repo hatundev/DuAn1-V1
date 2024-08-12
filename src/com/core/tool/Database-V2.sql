@@ -135,6 +135,7 @@ CREATE TABLE KhachHang
     id INT IDENTITY(1,1) PRIMARY KEY,
     ten_khach_hang NVARCHAR(50),
     so_dien_thoai VARCHAR(20),
+    ghi_chu nvarchar(255),
     hoat_dong BIT NOT NULL
 );
 
@@ -219,7 +220,6 @@ CREATE TABLE HoaDonChiTiet
     id_hoa_don INT NOT NULL,
     gia_ban FLOAT,
     mo_ta NVARCHAR(250),
-    hoat_dong BIT NOT NULL,
     FOREIGN KEY (id_chi_tiet_san_pham) REFERENCES ChiTietSanPham(id),
     FOREIGN KEY (id_hoa_don) REFERENCES HoaDon(id)
 );
@@ -227,6 +227,7 @@ CREATE TABLE HoaDonChiTiet
 CREATE TABLE ImeiDaBan
 (
     id INT IDENTITY(1,1) PRIMARY KEY,
+    id_hoa_don_chi_tiet INT NOT NULL,
     ma_imei VARCHAR(30) NOT NULL UNIQUE,
-    hoat_dong BIT NOT NULL
+    FOREIGN KEY (id_hoa_don_chi_tiet) REFERENCES HoaDonChiTiet(id)
 );

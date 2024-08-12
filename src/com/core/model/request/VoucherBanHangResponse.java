@@ -22,6 +22,8 @@ import lombok.ToString;
 public class VoucherBanHangResponse {
     
     private Integer stt;
+    
+    private Integer id;
 
     private String maVoucher;
 

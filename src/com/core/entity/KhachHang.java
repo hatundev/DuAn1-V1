@@ -31,4 +31,5 @@ public class KhachHang {
     
     private Integer hoatDong;
     
+    private String ghiChu;
 }
